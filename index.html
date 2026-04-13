@@ -1,889 +1,1113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bali Pilates Plus – Teacher Training</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --teal: #3d7c6f;
-    --teal-light: #4f9486;
-    --teal-dark: #2d5e54;
-    --sand: #f5f0e8;
-    --sand-dark: #e8e0d0;
-    --charcoal: #2a2a2a;
-    --mid: #555;
-    --light: #888;
-    --white: #fff;
-    --accent: #c8a96e;
-    --radius: 4px;
-    --shadow: 0 4px 24px rgba(0,0,0,0.09);
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bali Pilates Plus – Teacher Training</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Lato', 'sans-serif'],
+            sans: ['Lato', 'sans-serif'],
+          },
+          colors: {
+            lightgrey: {
+              DEFAULT: '#EEEEEE',
+              dark: '#e8e0d0',
+            },
+            teal: {
+              DEFAULT: '#3d7c6f',
+              light: '#4f9486',
+              dark: '#2d5e54',
+            },
+            sand: {
+              DEFAULT: '#f5f0e8',
+              dark: '#e8e0d0',
+            },
+            accent: '#c8a96e',
+            charcoal: '#2a2a2a',
+            mid: '#555555',
+            muted: '#888888',
+          },
+          keyframes: {
+            bounce: {
+              '0%, 100%': { transform: 'translateX(-50%) translateY(0)' },
+              '50%': { transform: 'translateX(-50%) translateY(6px)' },
+            },
+            fadeUp: {
+              '0%': { opacity: '0', transform: 'translateY(28px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+          },
+          animation: {
+            bounce: 'bounce 2s infinite',
+            'fade-up': 'fadeUp 0.6s ease forwards',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    color: var(--charcoal);
-    background: var(--white);
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-  h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; font-weight: 400; }
-  a { text-decoration: none; color: inherit; }
-  img { max-width: 100%; display: block; }
+    body {
+      overflow-x: hidden;
+    }
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 5%; height: 64px;
-    background: rgba(20,35,30,0.88);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem; font-weight: 600;
-    letter-spacing: 0.08em; color: var(--white);
-  }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    font-size: 0.82rem; letter-spacing: 0.06em;
-    color: rgba(255,255,255,0.85); transition: color .2s;
-  }
-  .nav-links a:hover { color: var(--white); }
-  .nav-cta {
-    background: var(--teal); color: var(--white) !important;
-    padding: 0.45rem 1.2rem; border-radius: 2px;
-    font-size: 0.8rem !important; font-weight: 500;
-    letter-spacing: 0.04em; transition: background .2s;
-  }
-  .nav-cta:hover { background: var(--teal-light); }
-  .hamburger {
-    display: none; flex-direction: column; gap: 5px;
-    cursor: pointer; background: none; border: none; padding: 4px;
-  }
-  .hamburger span {
-    display: block; width: 24px; height: 2px;
-    background: var(--white); border-radius: 2px; transition: all .3s;
-  }
-  .mobile-menu {
-    display: none; position: fixed;
-    top: 64px; left: 0; right: 0;
-    background: rgba(20,35,30,0.97);
-    padding: 1.5rem 5%; z-index: 99;
-    flex-direction: column; gap: 1rem;
-  }
-  .mobile-menu.open { display: flex; }
-  .mobile-menu a {
-    color: rgba(255,255,255,0.85); font-size: 1rem;
-    padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);
-    letter-spacing: 0.04em;
-  }
+    .hero-slides {
+      display: flex;
+      transition: transform 0.8s cubic-bezier(.25, .46, .45, .94);
+    }
 
-  /* HERO */
-  .hero {
-    position: relative; height: 100vh; min-height: 600px;
-    display: flex; align-items: center; overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, #1a2e28 0%, #2d4f45 40%, #3d6b5a 100%);
-  }
-  .hero-pattern {
-    position: absolute; inset: 0;
-    background-image:
-      radial-gradient(circle at 70% 40%, rgba(255,255,255,0.04) 0%, transparent 60%),
-      radial-gradient(circle at 20% 80%, rgba(200,169,110,0.08) 0%, transparent 50%);
-  }
-  .hero-img-overlay {
-    position: absolute; inset: 0;
-    background: url('https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=80') center/cover no-repeat;
-    opacity: 0.22; mix-blend-mode: luminosity;
-  }
-  .hero-content {
-    position: relative; max-width: 1200px;
-    margin: 0 auto; padding: 0 5%; width: 100%;
-  }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: rgba(200,169,110,0.15);
-    border: 1px solid rgba(200,169,110,0.4);
-    color: var(--accent); font-size: 0.75rem;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 0.4rem 1rem; border-radius: 2px; margin-bottom: 1.5rem;
-  }
-  .hero h1 {
-    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
-    line-height: 1.12; color: var(--white);
-    max-width: 640px; margin-bottom: 1.25rem;
-  }
-  .hero h1 em { font-style: italic; color: var(--accent); }
-  .hero-sub {
-    color: rgba(255,255,255,0.7); font-size: 1rem;
-    max-width: 460px; margin-bottom: 2rem; font-weight: 300;
-  }
-  .hero-pills { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2.5rem; }
-  .pill {
-    display: flex; align-items: center; gap: 0.4rem;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.85); font-size: 0.78rem;
-    padding: 0.4rem 0.9rem; border-radius: 100px;
-  }
-  .hero-btns { display: flex; flex-wrap: wrap; gap: 1rem; }
-  .btn-primary {
-    background: var(--teal); color: var(--white);
-    padding: 0.85rem 2rem; font-size: 0.88rem; font-weight: 500;
-    letter-spacing: 0.05em; border-radius: 2px; border: none;
-    cursor: pointer; transition: background .2s, transform .2s; display: inline-block;
-  }
-  .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); }
-  .btn-outline {
-    background: transparent; color: var(--white);
-    border: 1.5px solid rgba(255,255,255,0.45);
-    padding: 0.85rem 2rem; font-size: 0.88rem;
-    letter-spacing: 0.05em; border-radius: 2px; cursor: pointer;
-    transition: border-color .2s, background .2s; display: inline-block;
-  }
-  .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.06); }
-  .hero-scroll {
-    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
-    color: rgba(255,255,255,0.5); font-size: 0.7rem;
-    letter-spacing: 0.1em; text-transform: uppercase; animation: bounce 2s infinite;
-  }
-  @keyframes bounce {
-    0%,100% { transform: translateX(-50%) translateY(0); }
-    50%      { transform: translateX(-50%) translateY(6px); }
-  }
+    .hero-slide {
+      flex: 0 0 100%;
+      position: relative;
+    }
 
-  /* SECTIONS */
-  section { padding: 80px 5%; }
-  .section-inner { max-width: 1200px; margin: 0 auto; }
-  .section-label {
-    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--teal); margin-bottom: 0.6rem;
-  }
-  .section-title {
-    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-    line-height: 1.2; color: var(--charcoal); margin-bottom: 1rem;
-  }
-  .section-desc {
-    color: var(--mid); font-size: 0.95rem; max-width: 600px;
-    font-weight: 300; margin-bottom: 3rem; line-height: 1.7;
-  }
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
 
-  /* WHY */
-  .why { background: var(--white); }
-  .why-header { text-align: center; }
-  .why-header .section-desc { margin-left: auto; margin-right: auto; }
-  .why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; }
-  .why-card {
-    text-align: center; padding: 2rem 1.5rem; border-radius: 4px;
-    transition: box-shadow .25s, transform .25s;
-  }
-  .why-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
-  .why-icon {
-    width: 56px; height: 56px; background: rgba(61,124,111,0.1);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 1.25rem; font-size: 1.4rem;
-  }
-  .why-card h3 { font-size: 1.05rem; margin-bottom: 0.6rem; font-weight: 500; }
-  .why-card p { font-size: 0.88rem; color: var(--mid); line-height: 1.65; }
+    .accordion-item.open .accordion-body {
+      max-height: 300px;
+    }
 
-  /* PATHS */
-  .paths { background: var(--sand); }
-  .paths-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-  .path-card {
-    background: var(--white); border-radius: 6px; overflow: hidden;
-    box-shadow: var(--shadow); transition: transform .25s;
-  }
-  .path-card:hover { transform: translateY(-4px); }
-  .path-img { height: 240px; overflow: hidden; }
-  .path-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
-  .path-card:hover .path-img img { transform: scale(1.04); }
-  .path-body { padding: 2rem; }
-  .path-tag {
-    display: inline-block; background: rgba(61,124,111,0.1); color: var(--teal);
-    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 0.3rem 0.8rem; border-radius: 100px; margin-bottom: 1rem;
-  }
-  .path-body h3 { font-size: 1.3rem; margin-bottom: 0.75rem; }
-  .path-body p { font-size: 0.88rem; color: var(--mid); margin-bottom: 1.25rem; line-height: 1.7; }
-  .path-features { list-style: none; margin-bottom: 1.75rem; }
-  .path-features li {
-    font-size: 0.85rem; color: var(--mid); padding: 0.35rem 0;
-    border-bottom: 1px solid var(--sand-dark);
-    display: flex; align-items: flex-start; gap: 0.5rem;
-  }
-  .path-features li::before { content: '✓'; color: var(--teal); font-weight: 600; flex-shrink: 0; }
-  .btn-teal {
-    background: var(--teal); color: var(--white);
-    padding: 0.75rem 1.8rem; font-size: 0.85rem; letter-spacing: 0.04em;
-    border-radius: 2px; border: none; cursor: pointer;
-    transition: background .2s; display: inline-block;
-  }
-  .btn-teal:hover { background: var(--teal-light); }
+    .accordion-icon {
+      transition: transform 0.3s, background 0.2s;
+    }
 
-  /* LEARN – ACCORDION */
-  .learn { background: var(--white); }
-  .learn-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-  .learn-img { border-radius: 6px; overflow: hidden; position: sticky; top: 90px; }
-  .learn-img img { width: 100%; height: 480px; object-fit: cover; }
-  .accordion-list { display: flex; flex-direction: column; }
-  .accordion-item { border-bottom: 1px solid var(--sand-dark); }
-  .accordion-trigger {
-    width: 100%; background: none; border: none; padding: 1.25rem 0;
-    display: flex; align-items: center; justify-content: space-between;
-    cursor: pointer; font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem; color: var(--charcoal); text-align: left; transition: color .2s;
-  }
-  .accordion-trigger:hover { color: var(--teal); }
-  .accordion-icon {
-    width: 28px; height: 28px; border-radius: 50%; background: var(--sand);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; font-size: 1.1rem;
-    transition: background .2s, transform .3s; color: var(--teal); font-weight: 300;
-  }
-  .accordion-item.open .accordion-icon {
-    background: var(--teal); color: var(--white); transform: rotate(45deg);
-  }
-  .accordion-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
-  .accordion-item.open .accordion-body { max-height: 300px; }
-  .accordion-content { padding: 0 0 1.25rem; font-size: 0.9rem; color: var(--mid); line-height: 1.75; }
+    .accordion-item.open .accordion-icon {
+      transform: rotate(45deg);
+      background: #3d7c6f;
+      color: white;
+    }
 
-  /* INVESTMENT – CAROUSEL */
-  .investment { background: var(--sand); }
-  .investment-header {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;
-  }
-  .carousel-wrap { position: relative; overflow: hidden; }
-  .carousel-track { display: flex; gap: 1.5rem; transition: transform .4s cubic-bezier(.25,.46,.45,.94); }
-  .invest-card {
-    background: var(--white); border-radius: 6px; overflow: hidden;
-    box-shadow: var(--shadow); flex: 0 0 calc(50% - 0.75rem); min-width: 0;
-  }
-  .invest-card-img { height: 200px; overflow: hidden; }
-  .invest-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
-  .invest-card:hover .invest-card-img img { transform: scale(1.04); }
-  .invest-body { padding: 1.75rem; }
-  .invest-header-row {
-    display: flex; justify-content: space-between;
-    align-items: flex-start; margin-bottom: 1rem;
-  }
-  .invest-title { font-size: 1.15rem; }
-  .invest-price { font-size: 1.05rem; font-weight: 600; color: var(--teal); white-space: nowrap; }
-  .invest-features { list-style: none; margin: 0.75rem 0 1.5rem; }
-  .invest-features li {
-    font-size: 0.83rem; color: var(--mid); padding: 0.3rem 0;
-    display: flex; align-items: flex-start; gap: 0.5rem;
-  }
-  .invest-features li::before { content: '✓'; color: var(--teal); font-weight: 600; flex-shrink: 0; }
-  .intake-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.25rem; }
-  .intake-badge {
-    font-size: 0.75rem; background: rgba(61,124,111,0.08);
-    color: var(--teal-dark); border-radius: 2px; padding: 0.3rem 0.7rem;
-  }
-  .carousel-controls { display: flex; gap: 0.75rem; }
-  .carousel-btn {
-    width: 42px; height: 42px; border-radius: 50%;
-    border: 1.5px solid var(--teal); background: transparent; color: var(--teal);
-    font-size: 1.1rem; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; transition: background .2s, color .2s;
-  }
-  .carousel-btn:hover { background: var(--teal); color: var(--white); }
-  .carousel-dots { display: flex; gap: 0.4rem; align-items: center; justify-content: center; margin-top: 1rem; }
-  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sand-dark); transition: background .2s, width .2s; cursor: pointer; }
-  .dot.active { background: var(--teal); width: 18px; border-radius: 3px; }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
 
-  /* TRUSTED */
-  .trusted { background: var(--white); }
-  .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-bottom: 4rem; }
-  .stat-card { text-align: center; padding: 2rem; border: 1px solid var(--sand-dark); border-radius: 6px; }
-  .stat-icon { font-size: 2rem; margin-bottom: 0.75rem; }
-  .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; color: var(--teal); line-height: 1; margin-bottom: 0.4rem; }
-  .stat-label { font-size: 0.85rem; color: var(--mid); }
-  .testimonial-carousel { position: relative; overflow: hidden; }
-  .testimonial-track { display: flex; transition: transform .4s cubic-bezier(.25,.46,.45,.94); }
-  .testimonial-card {
-    flex: 0 0 100%; padding: 3rem; background: var(--sand);
-    border-radius: 6px; text-align: center;
-  }
-  .testimonial-quote {
-    font-size: 0.9rem; color: var(--mid); line-height: 1.8;
-    margin: 1rem auto 1.75rem; font-style: italic; max-width: 600px;
-  }
-  .testimonial-author { font-weight: 500; font-size: 0.88rem; color: var(--charcoal); }
-  .testimonial-role { font-size: 0.8rem; color: var(--light); margin-top: 0.2rem; }
-  .quotemark { font-family: 'Cormorant Garamond', serif; font-size: 4rem; color: var(--teal); line-height: 1; opacity: 0.4; }
-  .t-controls { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
+    .fade-up.visible {
+      opacity: 1;
+      transform: none;
+    }
 
-  /* FAQ */
-  .faq { background: var(--sand); }
-  .faq-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start; }
-  .faq-left h2 { font-size: clamp(1.8rem,3vw,2.5rem); margin-bottom: 1rem; }
-  .faq-left p { font-size: 0.9rem; color: var(--mid); line-height: 1.7; }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(.25, .46, .45, .94);
+    }
 
-  /* CTA BANNER */
-  .cta-banner {
-    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
-    padding: 80px 5%; text-align: center; position: relative; overflow: hidden;
-  }
-  .cta-banner::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(circle at 30% 50%, rgba(200,169,110,0.12) 0%, transparent 60%),
-                radial-gradient(circle at 80% 30%, rgba(255,255,255,0.05) 0%, transparent 50%);
-  }
-  .cta-banner .section-inner { position: relative; }
-  .cta-banner h2 { font-size: clamp(2rem,4vw,3.2rem); color: var(--white); margin-bottom: 1rem; }
-  .cta-banner p { color: rgba(255,255,255,0.75); font-size: 1rem; margin-bottom: 2.5rem; font-weight: 300; }
-  .cta-banner .hero-btns { justify-content: center; }
-  .btn-white {
-    background: var(--white); color: var(--teal-dark);
-    padding: 0.85rem 2rem; font-size: 0.88rem; font-weight: 500;
-    letter-spacing: 0.05em; border-radius: 2px; border: none;
-    cursor: pointer; transition: opacity .2s; display: inline-block;
-  }
-  .btn-white:hover { opacity: 0.9; }
+    .t-track {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(.25, .46, .45, .94);
+    }
 
-  /* GUIDE */
-  .guide { background: var(--charcoal); padding: 64px 5%; }
-  .guide-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-  .guide h2 { color: var(--white); font-size: clamp(1.5rem,2.8vw,2.2rem); margin-bottom: 0.75rem; }
-  .guide p { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.75rem; }
-  .guide-form { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-  .guide-form input {
-    flex: 1; min-width: 200px; padding: 0.8rem 1.2rem;
-    border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.07);
-    color: var(--white); border-radius: 2px; font-size: 0.9rem;
-    font-family: 'DM Sans', sans-serif; outline: none; transition: border-color .2s;
-  }
-  .guide-form input::placeholder { color: rgba(255,255,255,0.4); }
-  .guide-form input:focus { border-color: var(--teal-light); }
-  .guide-links { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .guide-link-card {
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 4px; padding: 1.25rem; transition: background .2s;
-  }
-  .guide-link-card:hover { background: rgba(255,255,255,0.1); }
-  .guide-link-title { font-size: 0.8rem; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.4rem; }
-  .guide-link-label { font-size: 0.88rem; color: rgba(255,255,255,0.75); }
+    .dot.active {
+      background: #3d7c6f;
+      width: 18px;
+      border-radius: 3px;
+    }
 
-  /* FOOTER */
-  footer { background: #111e1a; padding: 56px 5% 32px; color: rgba(255,255,255,0.55); font-size: 0.85rem; }
-  .footer-inner { max-width: 1200px; margin: 0 auto; }
-  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 3rem; margin-bottom: 3rem; }
-  .footer-brand .nav-logo { color: var(--white); margin-bottom: 1rem; display: block; }
-  .footer-brand p { line-height: 1.7; font-size: 0.83rem; }
-  .footer-col h4 { font-family: 'DM Sans', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.9); margin-bottom: 1rem; font-weight: 500; }
-  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
-  .footer-col a { color: rgba(255,255,255,0.5); font-size: 0.85rem; transition: color .2s; }
-  .footer-col a:hover { color: rgba(255,255,255,0.85); }
-  .footer-contact p { margin-bottom: 0.5rem; line-height: 1.6; }
-  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-
-  /* FADE-IN */
-  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
-  .fade-up.visible { opacity: 1; transform: none; }
-
-  /* RESPONSIVE */
-  @media (max-width: 1024px) {
-    .why-grid { grid-template-columns: repeat(2,1fr); }
-    .paths-grid { grid-template-columns: 1fr; }
-    .learn-layout { grid-template-columns: 1fr; }
-    .learn-img { position: static; }
-    .learn-img img { height: 320px; }
-    .faq-layout { grid-template-columns: 1fr; gap: 2rem; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-    .guide-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .stats-row { grid-template-columns: 1fr 1fr; }
-    .invest-card { flex: 0 0 85%; }
-  }
-  @media (max-width: 768px) {
-    section { padding: 56px 5%; }
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-    .why-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .invest-card { flex: 0 0 90%; }
-    .stats-row { grid-template-columns: 1fr 1fr; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-    .footer-contact { grid-column: 1 / -1; }
-    .guide-links { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 500px) {
-    .why-grid { grid-template-columns: 1fr; }
-    .stats-row { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr; }
-    .hero-btns { flex-direction: column; }
-    .hero-btns a, .hero-btns button { width: 100%; text-align: center; }
-    .invest-card { flex: 0 0 95%; }
-    .testimonial-card { padding: 2rem 1.5rem; }
-    .guide-links { grid-template-columns: 1fr 1fr; }
-  }
-</style>
+    .text-accent-gradient {
+      color: #c8a96e;
+    }
+  </style>
 </head>
-<body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">B | Bali Pilates Plus</div>
-  <ul class="nav-links">
-    <li><a href="#">Overview</a></li>
-    <li><a href="#">Pathways</a></li>
-    <li><a href="#">Curriculum</a></li>
-    <li><a href="#">Testimonials</a></li>
-    <li><a href="#">Pricing</a></li>
-    <li><a href="#">FAQ</a></li>
-    <li><a href="#" class="nav-cta">Apply Now</a></li>
-  </ul>
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#">Overview</a>
-  <a href="#">Pathways</a>
-  <a href="#">Curriculum</a>
-  <a href="#">Testimonials</a>
-  <a href="#">Pricing</a>
-  <a href="#">FAQ</a>
-  <a href="#" class="btn-teal" style="text-align:center;border-radius:2px;padding:.75rem 1rem;margin-top:.5rem">Apply Now</a>
-</div>
+<body class="font-sans text-charcoal bg-white ">
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-pattern"></div>
-  <div class="hero-img-overlay"></div>
-  <div class="hero-content">
-    <div class="hero-badge">✦ Bali Pilates Teacher Training</div>
-    <h1>Become a Certified Pilates Teacher &amp; <em>Build a Career You Love</em></h1>
-    <p class="hero-sub">Train alongside world-class instructors in a studio programme designed for depth, mastery, and real-world confidence.</p>
-    <div class="hero-pills">
-      <span class="pill">🎓 Small Cohorts</span>
-      <span class="pill">✦ International Certification</span>
-      <span class="pill">🏄 No Prior Teaching Experience Required</span>
-    </div>
-    <div class="hero-btns">
-      <a href="#" class="btn-primary">Explore Your Pathway</a>
-      <a href="#" class="btn-outline">Learn With Us</a>
-    </div>
-  </div>
-  <div class="hero-scroll"><span>Scroll</span><span>↓</span></div>
-</section>
+  <section class="relative h-[120vh] lg:h-screen min-h-[600px] pt-[200px] lg:pt-0 overflow-hidden">
 
-<!-- WHY TRAIN -->
-<section class="why">
-  <div class="section-inner">
-    <div class="why-header fade-up">
-      <div class="section-label">Why Us</div>
-      <h2 class="section-title">Why Train with Bali Pilates Plus?</h2>
-      <p class="section-desc">Lorem ipsum from our Bali Pilates Teacher is the go-to instructor programme in online studio. In this programme we will build the skills, mentoring, and online community learning – a thorough experience for ambitious Pilates teachers.</p>
-    </div>
-    <div class="why-grid">
-      <div class="why-card fade-up"><div class="why-icon">🧠</div><h3>Expert Mentorship</h3><p>Train directly with highly-skilled visiting practitioners through our programme.</p></div>
-      <div class="why-card fade-up"><div class="why-icon">🤝</div><h3>Small Cohorts</h3><p>Personalised attention, strong peer connections, and deeply involved mentors.</p></div>
-      <div class="why-card fade-up"><div class="why-icon">🏋️</div><h3>Hands-On Practice</h3><p>Extensive practical sessions throughout all your work and learning.</p></div>
-      <div class="why-card fade-up"><div class="why-icon">🌍</div><h3>Global Certification</h3><p>Internationally recognised credentials accepted by studios around the world.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- CERTIFICATION PATHS -->
-<section class="paths">
-  <div class="section-inner">
-    <div class="fade-up">
-      <div class="section-label">Your Path</div>
-      <h2 class="section-title">Choose Your Certification Path</h2>
-      <p class="section-desc">Two pathways offering diverse certification options depending on your career goals and prior Pilates knowledge.</p>
-    </div>
-    <div class="paths-grid">
-      <div class="path-card fade-up">
-        <div class="path-img"><img src="https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?w=800&q=80" alt="Mat Reformer Training" loading="lazy"></div>
-        <div class="path-body">
-          <span class="path-tag">Foundation</span>
-          <h3>Mat &amp; Reformer Teacher Certification</h3>
-          <p>Build teaching skills using mat-work coaching and develop a lasting appreciation of Pilates foundations.</p>
-          <ul class="path-features">
-            <li>Approx. 300 hrs of full-time training</li>
-            <li>Combination of in-person seminars and online study</li>
-            <li>Develop strong teaching foundations and confidence</li>
-            <li>Perfect for aspiring Pilates teachers and enthusiasts</li>
-          </ul>
-          <a href="#" class="btn-teal">Apply – Foundation</a>
-        </div>
+    <div class="hero-slides absolute inset-0 z-0" id="heroTrack">
+      <div
+        class="hero-slide w-full h-full flex-shrink-0 bg-[url('https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=80')] bg-cover bg-center">
       </div>
-      <div class="path-card fade-up">
-        <div class="path-img"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80" alt="Comprehensive Training" loading="lazy"></div>
-        <div class="path-body">
-          <span class="path-tag">Comprehensive</span>
-          <h3>Comprehensive Teacher Certification</h3>
-          <p>This programme covers everything from mat to all apparatus, including barrel, trapeze, and private sessions.</p>
-          <ul class="path-features">
-            <li>Includes Cadillac, Chair &amp; Combo training</li>
-            <li>Approx. 600 hrs of additional study</li>
-            <li>Final assessment and exam practice potential</li>
-            <li>Ideal for serious teachers, studios, and private clients</li>
-          </ul>
-          <a href="#" class="btn-teal">Apply – Comprehensive</a>
+      <div
+        class="hero-slide w-full h-full flex-shrink-0 bg-[url('https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?w=1600&q=80')] bg-cover bg-center">
+      </div>
+      <div
+        class="hero-slide w-full h-full flex-shrink-0 bg-[url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1600&q=80')] bg-cover bg-center">
+      </div>
+    </div>
+
+    <div class="absolute inset-0 z-10 bg-gradient-to-b from-[#1a2e28]/80 via-[#2d4f45]/70 to-[#1a2e28]/85"></div>
+    <div class="absolute inset-0 z-10"
+      style="background:radial-gradient(circle at 50% 40%, rgba(255,255,255,0.03) 0%, transparent 65%), radial-gradient(circle at 20% 80%, rgba(200,169,110,0.07) 0%, transparent 50%)">
+    </div>
+
+    <div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-start lg:text-center px-6">
+
+      <h1 class="font-serif font-normal text-[clamp(2.2rem,3vw,3rem)] leading-[1.12] text-white max-w-3xl mb-5">
+        Become a Certified Pilates Teacher &amp; Build a Career You Love
+      </h1>
+      <p class="text-white text-lg max-w-md mb-8 font-light leading-relaxed">Train in Bali with a globally recognized
+        certification designed for real-world teaching.</p>
+      <div class="flex flex-wrap justify-start lg:justify-center gap-3 mb-10">
+        <span class="flex items-center gap-2 text-white/85 text-[1.25rem] rounded-full">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.5501 18L3.8501 12.3L5.2751 10.875L9.5501 15.15L18.7251 5.97498L20.1501 7.39998L9.5501 18Z"
+              fill="white" />
+          </svg>
+          Small Cohorts</span>
+        <span class="text-white/85 text-[1.25rem] hidden lg:block"> | </span>
+        <span class="flex items-center gap-2 text-white/85 text-[1.25rem] rounded-full">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.5501 18L3.8501 12.3L5.2751 10.875L9.5501 15.15L18.7251 5.97498L20.1501 7.39998L9.5501 18Z"
+              fill="white" />
+          </svg>
+          International Certification</span>
+        <span class="text-white/85 text-[1.25rem] hidden lg:block"> | </span>
+        <span class="flex items-center gap-2 text-white/85 text-[1.25rem] rounded-full">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.5501 18L3.8501 12.3L5.2751 10.875L9.5501 15.15L18.7251 5.97498L20.1501 7.39998L9.5501 18Z"
+              fill="white" />
+          </svg>
+          No Prior Teaching Required</span>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <a href="#"
+          class="inline-block bg-teal text-white px-8 py-[0.85rem] text-[0.88rem] font-medium tracking-wide rounded-sm hover:bg-teal-light transition-all hover:-translate-y-px">Apply
+          for upcoming course</a>
+        <a href="#"
+          class="inline-block bg-transparent text-white border border-white/45 px-8 py-[0.85rem] text-[0.88rem] tracking-wide rounded-sm hover:border-white hover:bg-white/[0.06] transition-all">Book
+          a discovery call</a>
+      </div>
+
+      <div class="flex flex-col items-center gap-4">
+        <div class="flex items-center gap-6">
+          <button id="heroPrev" class="hover:text-white transition-colors text-2xl leading-none" aria-label="Previous">
+            <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g>
+                <path d="M28.5 30L40 18.5L36.5 15L21.5 30L36.5 45L40 41.5L28.5 30Z" fill="white" />
+              </g>
+            </svg>
+          </button>
+          <button id="heroNext" class="hover:text-white transition-colors text-2xl leading-none" aria-label="Next">
+            <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M31.5 30L20 18.5L23.5 15L38.5 30L23.5 45L20 41.5L31.5 30Z" fill="white" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- WHAT YOU LEARN -->
-<section class="learn">
-  <div class="section-inner">
-    <div class="learn-layout">
-      <div class="learn-img fade-up">
-        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80" alt="Pilates practice" loading="lazy">
+  </section>
+
+  <section class="py-20 px-[5%] bg-white">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center fade-up">
+        <h2 class="font-serif text-[clamp(1.8rem,3.5vw,2.8rem)] text-charcoal mb-4">Why Train with Bali Pilates Plus?
+        </h2>
+        <p class="text-mid text-base max-w-xl mx-auto mb-12 leading-relaxed">Learn directly from
+          experienced Master Teachers who guide and mentor you throughout the entire program. Our approach focuses on
+          real teaching experience, supportive learning, and global career opportunities.</p>
       </div>
-      <div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="text-center px-6 py-8 fade-up">
+          <div class="flex items-center justify-center mx-auto mb-5 text-4xl">
+            <svg class="w-20 h-20" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M40.0001 73.3333L33.3334 53.3333H6.66675L13.3334 73.3333H40.0001ZM40.0001 73.3333H53.3334M40.0001 43.3333V41.6666C40.0001 35.3799 40.0001 32.2399 38.0467 30.2866C36.0934 28.3333 32.9534 28.3333 26.6667 28.3333C20.3801 28.3333 17.2401 28.3333 15.2867 30.2866C13.3334 32.2399 13.3334 35.3799 13.3334 41.6666V43.3333"
+                stroke="#3F7D73" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M63.3333 43.3333C63.3333 45.1014 62.631 46.7971 61.3807 48.0473C60.1305 49.2976 58.4348 50 56.6667 50C54.8986 50 53.2029 49.2976 51.9526 48.0473C50.7024 46.7971 50 45.1014 50 43.3333C50 41.5652 50.7024 39.8695 51.9526 38.6192C53.2029 37.369 54.8986 36.6666 56.6667 36.6666C58.4348 36.6666 60.1305 37.369 61.3807 38.6192C62.631 39.8695 63.3333 41.5652 63.3333 43.3333ZM33.3333 13.3333C33.3333 15.1014 32.631 16.7971 31.3807 18.0473C30.1305 19.2976 28.4348 20 26.6667 20C24.8986 20 23.2029 19.2976 21.9526 18.0473C20.7024 16.7971 20 15.1014 20 13.3333C20 11.5652 20.7024 9.86949 21.9526 8.61925C23.2029 7.369 24.8986 6.66663 26.6667 6.66663C28.4348 6.66663 30.1305 7.369 31.3807 8.61925C32.631 9.86949 33.3333 11.5652 33.3333 13.3333Z"
+                stroke="#3F7D73" stroke-width="3" />
+              <path
+                d="M46.6667 58.3333H66.6667C68.4349 58.3333 70.1305 59.0356 71.3808 60.2859C72.631 61.5361 73.3334 63.2318 73.3334 64.9999V66.6666C73.3334 68.4347 72.631 70.1304 71.3808 71.3806C70.1305 72.6309 68.4349 73.3333 66.6667 73.3333H63.3334"
+                stroke="#3F7D73" stroke-width="3" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3 class="font-serif text-2xl font-medium mb-2">Expert Mentorship</h3>
+          <p class="text-[0.88rem] text-mid leading-relaxed">Train with a highly experienced Master Teacher who will
+            guide you every step of the way.</p>
+        </div>
+        <div class="text-center px-6 py-8 fade-up">
+          <div class="flex items-center justify-center mx-auto mb-5 text-2xl">
+            <svg class="w-20 h-20" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M33.3334 11.6666C26.7867 11.6666 21.4034 16.85 21.4034 23.3333C21.4034 29.8166 26.7867 35 33.3367 35C38.85 35 43.5367 31.3233 44.88 26.29C45.4715 28.3071 46.7645 30.0463 48.5256 31.1939C50.2868 32.3415 52.4001 32.8219 54.4842 32.5483C56.5684 32.2747 58.4862 31.2652 59.8915 29.702C61.2968 28.1388 62.0971 26.1248 62.148 24.0233C62.1989 21.9219 61.497 19.8715 60.1691 18.2421C58.8411 16.6126 56.9745 15.5115 54.906 15.1373C52.8375 14.7632 50.7034 15.1406 48.8888 16.2016C47.0742 17.2626 45.6985 18.9372 45.01 20.9233C43.8667 15.6066 39.0434 11.6666 33.3334 11.6666ZM24.7367 23.3333C24.7367 18.77 28.5467 15 33.3367 15C38.1234 15 41.93 18.77 41.93 23.3333C41.93 27.8966 38.1234 31.6666 33.3334 31.6666C28.5467 31.6666 24.7367 27.8966 24.7367 23.3333ZM47.8567 23.81C47.8567 22.3575 48.4337 20.9644 49.4608 19.9374C50.4879 18.9103 51.8809 18.3333 53.3334 18.3333C54.7859 18.3333 56.1789 18.9103 57.206 19.9374C58.233 20.9644 58.81 22.3575 58.81 23.81C58.81 25.2625 58.233 26.6555 57.206 27.6825C56.1789 28.7096 54.7859 29.2866 53.3334 29.2866C51.8809 29.2866 50.4879 28.7096 49.4608 27.6825C48.4337 26.6555 47.8567 25.2625 47.8567 23.81ZM27.1667 39.7233C25.9434 38.9333 24.2534 38.37 22.52 38.8466C21.9867 38.9955 21.4556 39.1533 20.9267 39.32L17.6434 40.3733C13.7934 41.6066 10.83 44.6533 9.82671 48.5L9.80337 48.59L8.41337 58.38C7.90671 61.9533 9.87671 65.5666 13.7067 66.4566C17.6334 67.3666 24 68.3333 33.3334 68.3333C42.6667 68.3333 49.0334 67.3666 52.96 66.4566C56.7934 65.5666 58.76 61.9533 58.2534 58.38L56.8634 48.59L56.84 48.5C55.84 44.6533 52.8734 41.6033 49.0234 40.3733L45.7434 39.32C45.2145 39.1511 44.6822 38.9933 44.1467 38.8466C42.4134 38.37 40.7234 38.9333 39.5034 39.7233C38.19 40.57 36.02 41.62 33.3367 41.62C30.6534 41.62 28.4767 40.5733 27.1667 39.7233ZM23.4034 42.0566C23.92 41.9133 24.6267 42.0466 25.3567 42.5166C26.9867 43.5733 29.7867 44.95 33.3334 44.95C36.8834 44.95 39.6834 43.5733 41.3134 42.5166C42.04 42.05 42.7467 41.9166 43.2634 42.0566C43.7523 42.19 44.24 42.3344 44.7267 42.49L48.0067 43.5433C50.7834 44.4333 52.8667 46.5933 53.59 49.2466L54.9567 58.8466C55.2567 60.9666 54.1134 62.7633 52.2067 63.2066C48.55 64.0533 42.44 64.9966 33.3334 64.9966C24.2267 64.9966 18.12 64.0533 14.46 63.2066C12.5567 62.7633 11.4134 60.9666 11.7134 58.8466L13.08 49.2466C13.8 46.5933 15.88 44.4333 18.66 43.5433L21.9434 42.4933C22.4278 42.3377 22.9145 42.1933 23.4034 42.06M60.61 34.3266C60.0847 34.1956 59.5362 34.1882 59.0075 34.305C58.4789 34.4218 57.9845 34.6597 57.5634 35C56.6634 35.7 55.07 36.6666 53.3334 36.6666C52.8913 36.6666 52.4674 36.8422 52.1549 37.1548C51.8423 37.4673 51.6667 37.8913 51.6667 38.3333C51.6667 38.7753 51.8423 39.1992 52.1549 39.5118C52.4674 39.8244 52.8913 40 53.3334 40C56.1934 40 58.52 38.4766 59.61 37.6333C59.6504 37.5951 59.6997 37.5676 59.7534 37.5533H59.7667C60.2134 37.6711 60.6567 37.8022 61.0967 37.9466L63.38 38.6966C65.1334 39.2733 66.4634 40.6766 66.9334 42.41L67.8767 49.24C68.0634 50.5833 67.3567 51.59 66.3434 51.83C65.5989 52.0122 64.6956 52.19 63.6334 52.3633C63.4171 52.3983 63.2099 52.4756 63.0235 52.5907C62.8371 52.7058 62.6752 52.8565 62.5471 53.0341C62.419 53.2118 62.3271 53.413 62.2767 53.6262C62.2263 53.8394 62.2184 54.0604 62.2534 54.2766C62.2884 54.4929 62.3657 54.7001 62.4808 54.8865C62.5959 55.0729 62.7466 55.2347 62.9242 55.3629C63.1019 55.491 63.3031 55.5829 63.5163 55.6333C63.7294 55.6837 63.9505 55.6916 64.1667 55.6566C65.3045 55.4677 66.2867 55.2733 67.1134 55.0733C70.0967 54.3633 71.5567 51.5066 71.18 48.7833L70.21 41.7633L70.1867 41.6733C69.8217 40.246 69.1015 38.9343 68.0932 37.8602C67.085 36.7861 65.8214 35.9845 64.42 35.53L62.1367 34.78C61.6324 34.6137 61.1233 34.4625 60.61 34.3266Z"
+                fill="#3F7D73" />
+            </svg>
+          </div>
+          <h3 class="font-serif text-2xl font-medium mb-2">Small Cohorts</h3>
+          <p class="text-[0.88rem] text-mid leading-relaxed">Limited group sizes ensure personalised attention,
+            feedback, and support.</p>
+        </div>
+        <div class="text-center px-6 py-8 fade-up">
+          <div class="flex items-center justify-center mx-auto mb-5 text-2xl">
+            <svg class="w-20 h-20" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M50.8451 60.2717H29.1617M29.1617 53.5634H50.8384M67.5951 61.3117H68.9867C70.0084 61.3117 70.8334 60.4934 70.8334 59.4717V54.2184C70.8334 53.2017 70.0101 52.3784 68.9934 52.3784H67.6017M61.1134 66.6784H65.7567C65.9983 66.6791 66.2377 66.632 66.461 66.5398C66.6844 66.4477 66.8873 66.3123 67.0581 66.1414C67.229 65.9706 67.3643 65.7677 67.4565 65.5443C67.5486 65.321 67.5957 65.0817 67.5951 64.8401V48.8567C67.5964 48.369 67.4041 47.9007 67.0603 47.5548C66.7165 47.2088 66.2495 47.0135 65.7617 47.0117H61.1201M12.3984 61.3184H11.0134C10.7718 61.3193 10.5323 61.2725 10.3088 61.1809C10.0852 61.0892 9.88186 60.9544 9.71038 60.7842C9.5389 60.6139 9.40263 60.4116 9.30936 60.1887C9.21608 59.9658 9.16762 59.7267 9.16675 59.4851V54.2184C9.16675 53.1984 9.98508 52.3784 11.0134 52.3784H12.3984M18.8867 66.6784H14.2367C13.7492 66.6784 13.2816 66.4847 12.9368 66.14C12.5921 65.7952 12.3984 65.3276 12.3984 64.8401V48.8567C12.3984 47.8367 13.2167 47.0117 14.2384 47.0117H18.8751M35.2217 47.7867H50.8384M29.1551 45.9901L31.7067 43.4267M35.2234 35.1934H57.3067M22.9317 34.9284L25.2817 37.2851L31.7067 30.8284M35.2234 22.5951H57.3067M22.9317 22.3284L25.2817 24.6851L31.7067 18.2351M50.8401 65.7351H29.1601M15.6234 47.0101V13.0817C15.6234 11.0401 17.2567 9.39673 19.2784 9.39673H60.7284C62.7567 9.39673 64.3884 11.0351 64.3884 13.0817V47.0117M59.2801 43.0867H52.6834C51.6667 43.0867 50.8434 43.9101 50.8434 44.9267V68.7634C50.8425 69.0053 50.8895 69.2449 50.9817 69.4686C51.0738 69.6922 51.2093 69.8954 51.3804 70.0664C51.5514 70.2375 51.7546 70.373 51.9782 70.4651C52.2019 70.5573 52.4415 70.6043 52.6834 70.6034H59.2784C59.5203 70.6043 59.76 70.5573 59.9836 70.4651C60.2072 70.373 60.4104 70.2375 60.5815 70.0664C60.7525 69.8954 60.888 69.6922 60.9801 69.4686C61.0723 69.2449 61.1193 69.0053 61.1184 68.7634V44.9334C61.1193 44.6918 61.0726 44.4523 60.9809 44.2287C60.8892 44.0052 60.7544 43.8018 60.5842 43.6304C60.414 43.4589 60.2116 43.3226 59.9887 43.2293C59.7658 43.1361 59.5267 43.0876 59.2851 43.0867H59.2801ZM20.7201 43.0867H27.3101C28.3367 43.0867 29.1551 43.9051 29.1551 44.9334V68.7634C29.156 69.0057 29.1088 69.2458 29.0163 69.4697C28.9239 69.6937 28.7879 69.8971 28.6164 70.0682C28.4448 70.2393 28.241 70.3747 28.0168 70.4666C27.7926 70.5584 27.5524 70.6049 27.3101 70.6034H20.7267C19.7101 70.6034 18.8867 69.7801 18.8867 68.7634V44.9334C18.8867 43.9117 19.7067 43.0867 20.7267 43.0867H20.7201Z"
+                stroke="#3F7D73" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h3 class="font-serif text-2xl font-medium mb-2">Hands-On Practice</h3>
+          <p class="text-[0.88rem] text-mid leading-relaxed">Develop real confidence through practical teaching, not
+            just theory.</p>
+        </div>
+        <div class="text-center px-6 py-8 fade-up">
+          <div class="flex items-center justify-center mx-auto mb-5 text-2xl">
+            <svg class="w-20 h-20" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M5.71655 47.5H22.9166M5.71655 25.5567H67.6216M29.9999 54.17V74.275M50.9549 36.6667C50.9549 18.2567 44.5582 3.33337 36.6682 3.33337C28.7782 3.33337 22.3832 18.2567 22.3832 36.6667C22.3832 40.4584 22.6549 44.1034 23.1549 47.5"
+                stroke="#3F7D73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M69.6283 41.6667C69.8749 40.0334 69.9988 38.3667 69.9999 36.6667C69.9999 18.2567 55.0766 3.33337 36.6666 3.33337C18.2566 3.33337 3.33325 18.2567 3.33325 36.6667C3.33325 49.6817 10.7916 60.9534 21.6666 66.4417"
+                stroke="#3F7D73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M31.6766 56.5967C29.4366 55.5867 29.4366 52.7551 31.6766 51.7451C34.2082 50.61 36.7608 49.5226 39.3332 48.4834C44.5249 46.3751 48.2716 45.0201 50.5766 44.2334C52.3638 43.6204 54.3043 43.6204 56.0916 44.2334C58.3949 45.0201 62.1416 46.3751 67.3333 48.4834C69.9059 49.5233 72.4591 50.6107 74.9916 51.7451C77.2316 52.7551 77.2316 55.5867 74.9916 56.5967C72.4594 57.7318 69.9062 58.8192 67.3333 59.8584C62.1433 61.9667 58.3949 63.3217 56.0916 64.1084C54.3038 64.7217 52.3627 64.7217 50.5749 64.1084C48.2732 63.3217 44.5249 61.9667 39.3332 59.8584C36.7603 58.8192 34.2071 57.7318 31.6749 56.5967"
+                stroke="#3F7D73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M39.1665 59.79V64.935C39.1665 67.5817 39.2748 69.4517 39.4048 70.7417C39.5748 72.445 40.5382 73.8967 42.0998 74.5967C44.2132 75.5467 47.8698 76.67 53.3332 76.67C58.7965 76.67 62.4532 75.545 64.5665 74.5967C66.1265 73.8967 67.0915 72.445 67.2615 70.7417C67.3915 69.4517 67.4998 67.5817 67.4998 64.935V59.79"
+                stroke="#3F7D73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h3 class="font-serif text-2xl font-medium mb-2">Global Certification</h3>
+          <p class="text-[0.88rem] text-mid leading-relaxed">Graduate with the skills and knowledge to teach in studios
+            worldwide.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 px-[5%] bg-lightgrey">
+    <div class="max-w-7xl mx-auto">
+      <div class="fade-up mb-10 text-center flex flex-col items-center justify-center">
+        <h2 class="font-serif text-[clamp(2.2rem,3vw,3rem)] text-charcoal mb-4">Choose Your Certification Path</h2>
+        <p class="text-mid text-base leading-relaxed">Flexible training options designed to support your goals — whether
+          you're starting your journey or pursuing a full professional certification.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="bg-none rounded-lg overflow-hidden fade-up">
+          <div class="h-100 overflow-hidden">
+            <img src="https://static.wixstatic.com/media/af5771_60d56461933646a5b7b8f1cb3a60a9b0~mv2.webp"
+              alt="Mat Reformer Training" loading="lazy"
+              class="w-full h-[400px] object-cover transition-transform duration-500">
+          </div>
+          <div class="pt-8">
+            <span
+              class="inline-block bg-teal/10 text-teal text-[0.7rem] tracking-widest uppercase px-3 py-1 rounded-full mb-4">Foundation</span>
+            <h3 class="font-serif text-[1.3rem] mb-3">Mat &amp; Reformer Teacher Certification</h3>
+            <p class="text-[0.88rem] text-mid mb-5 leading-relaxed">Build teaching skills using mat-work coaching and
+              develop a lasting appreciation of Pilates foundations.</p>
+            <ul class="space-y-2 mb-7">
+              <li class="flex items-start gap-2 text-[0.85rem] text-mid border-b border-sand-dark py-2"><span
+                  class="text-teal font-semibold flex-shrink-0">✓</span> A strong introduction to Pilates teaching</li>
+              <li class="flex items-start gap-2 text-[0.85rem] text-mid border-b border-sand-dark py-2"><span
+                  class="text-teal font-semibold flex-shrink-0">✓</span> Focusing on foundational exercises, technique,
+                and core teaching skills to get you started with confidence.</li>
+            </ul>
+            <a href="#"
+              class="inline-block bg-teal text-white px-7 py-3 text-[0.85rem] tracking-wide rounded-sm hover:bg-teal-light transition-colors">View
+              Mat & Reformer Course</a>
+          </div>
+        </div>
+        <div class="bg-none rounded-lg overflow-hidden fade-up">
+          <div class="h-100 overflow-hidden">
+            <img src="https://static.wixstatic.com/media/af5771_4df4f7c943114d5aa789e9c5b935ef2e~mv2.webp"
+              alt="Comprehensive Training" loading="lazy"
+              class="w-full h-[400px] object-cover transition-transform duration-500">
+          </div>
+          <div class="pt-8">
+            <span
+              class="inline-block bg-teal/10 text-teal text-[0.7rem] tracking-widest uppercase px-3 py-1 rounded-full mb-4">Comprehensive</span>
+            <h3 class="font-serif text-[1.3rem] mb-3">Comprehensive Teacher Certification</h3>
+            <p class="text-[0.88rem] text-mid mb-5 leading-relaxed">This programme covers everything from mat to all
+              apparatus, including barrel, trapeze, and private sessions.</p>
+            <ul class="space-y-2 mb-7">
+              <li class="flex items-start gap-2 text-[0.85rem] text-mid border-b border-sand-dark py-2"><span
+                  class="text-teal font-semibold flex-shrink-0">✓</span> Our most comprehensive training pathway.</li>
+              <li class="flex items-start gap-2 text-[0.85rem] text-mid border-b border-sand-dark py-2"><span
+                  class="text-teal font-semibold flex-shrink-0">✓</span> Develop in-depth knowledge, extensive teaching
+                practice, and the confidence to teach clients across the full Pilates system and all studio apparatus
+                within a professional studio environment.</li>
+            </ul>
+            <a href="#"
+              class="inline-block bg-teal text-white px-7 py-3 text-[0.85rem] tracking-wide rounded-sm hover:bg-teal-light transition-colors">View
+              Comprehensive Course</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 px-[5%] bg-white">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div>
+          <div class="fade-up">
+            <h2 class="font-serif text-[clamp(1.8rem,3.5vw,2.8rem)] text-charcoal mb-4">What You Will Learn</h2>
+            <p class="text-mid text-[0.95rem] max-w-xl font-light leading-relaxed mb-8">Our curriculum is centred around
+              Pilates principles that are scientifically grounded and practically focused.</p>
+          </div>
+          <div class="rounded-lg overflow-hidden fade-up lg:sticky lg:top-24">
+            <img src="https://static.wixstatic.com/media/af5771_1384d984fa5a4eb1aeb32cef209c679d~mv2.webp"
+              alt="Pilates practice" loading="lazy" class="w-full h-[480px] object-cover">
+          </div>
+        </div>
+        <div class="flex items-center justify-center h-full">
+          <div id="learnAccordion" class="fade-up">
+            <div class="accordion-item open border-b border-sand-dark">
+              <button
+                class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-[1.15rem] text-charcoal text-left hover:text-teal transition-colors">
+                Course Objectives
+                <span
+                  class="accordion-icon w-7 h-7 rounded-full bg-sand flex items-center justify-center flex-shrink-0 text-teal text-xl font-light">+</span>
+              </button>
+              <div class="accordion-body">
+                <div class="pb-5 text-[0.9rem] text-mid leading-[1.75]">
+                  <p class="mb-2">By the end of this training, you will be able to:</p>
+                  <ul class="list-disc pl-5 space-y-1">
+                    <li>Demonstrate a strong understanding of Pilates principles, philosophy, and methodology</li>
+                    <li>Apply functional anatomy and biomechanics to movement analysis and instruction</li>
+                    <li>Confidently perform and teach both classical repertoire and contemporary variations</li>
+                    <li>Design structured, effective programs for private sessions and group classes</li>
+                    <li>Teach mixed-level clients with appropriate modifications, regressions, and progressions</li>
+                    <li>Deliver clear, confident instruction using effective verbal, tactile, and visual cueing</li>
+                    <li>Integrate studio apparatus and props safely and effectively</li>
+                    <li>Apply professional standards, ethics, and client communication in a studio environment</li>
+                    <li>Build confidence through real teaching practice and apprenticeship experience</li>
+                    <li>Develop the skills and presence required to begin teaching professionally</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item border-b border-sand-dark">
+              <button
+                class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-[1.15rem] text-charcoal text-left hover:text-teal transition-colors">
+                Course Prerequisites.
+                <span
+                  class="accordion-icon w-7 h-7 rounded-full bg-sand flex items-center justify-center flex-shrink-0 text-teal text-xl font-light">+</span>
+              </button>
+              <div class="accordion-body">
+                <div class="pb-5 text-[0.9rem] text-mid leading-[1.75]">A minimum of 20 Pilates classes or private
+                  sessions, along with a genuine passion for movement, wellness, and helping others.</div>
+              </div>
+            </div>
+            <div class="accordion-item border-b border-sand-dark">
+              <button
+                class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-[1.15rem] text-charcoal text-left hover:text-teal transition-colors">
+                Anatomy &amp Biomechanics
+                <span
+                  class="accordion-icon w-7 h-7 rounded-full bg-sand flex items-center justify-center flex-shrink-0 text-teal text-xl font-light">+</span>
+              </button>
+              <div class="accordion-body">
+                <div class="pb-5 text-[0.9rem] text-mid leading-[1.75]">Understand how the body moves, functions, and
+                  adapts — so you can teach safely and effectively.</div>
+              </div>
+            </div>
+            <div class="accordion-item border-b border-sand-dark">
+              <button
+                class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-[1.15rem] text-charcoal text-left hover:text-teal transition-colors">
+                Teaching Skills & Cueing
+                <span
+                  class="accordion-icon w-7 h-7 rounded-full bg-sand flex items-center justify-center flex-shrink-0 text-teal text-xl font-light">+</span>
+              </button>
+              <div class="accordion-body">
+                <div class="pb-5 text-[0.9rem] text-mid leading-[1.75]">Develop the ability to teach with clarity,
+                  confidence, and presence through our signature Teacher Toolkit — a refined system designed to elevate
+                  the way you communicate and deliver sessions.</div>
+              </div>
+            </div>
+            <div class="accordion-item border-b border-sand-dark">
+              <button
+                class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-[1.15rem] text-charcoal text-left hover:text-teal transition-colors">
+                Apprentice Practice, Teaching &amp Observation
+                <span
+                  class="accordion-icon w-7 h-7 rounded-full bg-sand flex items-center justify-center flex-shrink-0 text-teal text-xl font-light">+</span>
+              </button>
+              <div class="accordion-body">
+                <div class="pb-5 text-[0.9rem] text-mid leading-[1.75]">Build real-world teaching experience through
+                  guided practice, observation, and expert feedback — plus 6 months of studio access to complete your
+                  apprenticeship and graduate ready to teach.</div>
+              </div>
+            </div>
+            <div class="accordion-item border-b border-sand-dark">
+              <button
+                class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-[1.15rem] text-charcoal text-left hover:text-teal transition-colors">
+                Course & Study Requirements
+                <span
+                  class="accordion-icon w-7 h-7 rounded-full bg-sand flex items-center justify-center flex-shrink-0 text-teal text-xl font-light">+</span>
+              </button>
+              <div class="accordion-body">
+                <div class="pb-5 text-[0.9rem] text-mid leading-[1.75]">
+                  <p class="mb-2">A structured combination of in-person training, self-practice, and real teaching
+                    experience designed to ensure you graduate confident and fully prepared.</p>
+                  <ul class="list-disc pl-5 space-y-1">
+                    <li><strong>40 Hours — In-Person Seminars:</strong> Intensive, hands-on training delivered in our
+                      studio</li>
+                    <li><strong>80 Hours — Personal Practice:</strong> Develop your own movement practice and deepen
+                      your understanding of the method</li>
+                    <li><strong>160 Hours — Apprentice Teaching:</strong> Gain real teaching experience working with
+                      clients under guidance</li>
+                    <li><strong>20 Hours — Observation:</strong> Learn through watching experienced instructors in a
+                      professional studio environment</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 px-[5%] bg-lightgrey">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex justify-between items-end mb-10 flex-wrap gap-4 fade-up">
+        <div>
+          <p class="text-xs font-medium tracking-widest text-mid uppercase mb-2">Investment &amp; Upcoming Intakes</p>
+          <h2 class="font-serif text-[clamp(1.8rem,3.5vw,2.8rem)] text-charcoal">Certification Programmes</h2>
+        </div>
+        <div class="flex gap-3">
+          <button id="investPrev"
+            class="w-[42px] h-[42px] rounded-full border border-teal text-teal bg-transparent flex items-center justify-center hover:bg-teal hover:text-white transition-colors text-lg"
+            aria-label="Previous">←</button>
+          <button id="investNext"
+            class="w-[42px] h-[42px] rounded-full border border-teal text-teal bg-transparent flex items-center justify-center hover:bg-teal hover:text-white transition-colors text-lg"
+            aria-label="Next">→</button>
+        </div>
+      </div>
+      <div class="overflow-hidden">
+        <div class="carousel-track flex gap-6" id="investTrack">
+
+          <div
+            class="invest-card bg-white rounded-lg overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.09)] flex-shrink-0 flex-[0_0_100%] md:flex-[0_0_calc(50%-12px)]">
+            <div class="h-[200px] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=700&q=80" alt="Mat and Reformer"
+                loading="lazy" class="w-full h-full object-cover hover:scale-[1.04] transition-transform duration-500">
+            </div>
+            <div class="p-7">
+              <span
+                class="text-[0.68rem] font-semibold tracking-widest uppercase text-teal bg-teal/[0.08] px-2 py-1 rounded-sm">Mat
+                &amp; Reformer</span>
+              <div class="flex justify-between items-start mt-3 mb-4">
+                <h3 class="font-serif text-[1.15rem]">Mat &amp; Reformer Certification</h3>
+                <span class="text-[1.05rem] font-semibold text-teal whitespace-nowrap ml-4">USD $3,650</span>
+              </div>
+              <ul class="space-y-1 mb-5">
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> 8-day seminars</li>
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> Certification requirements: 300 hours</li>
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> Early bird discount: $300 off</li>
+              </ul>
+              <div class="flex flex-wrap gap-2 mb-5">
+                <span class="text-[0.75rem] bg-teal/[0.08] text-teal-dark rounded-sm px-3 py-1">300 hours</span>
+                <span class="text-[0.75rem] bg-teal/[0.08] text-teal-dark rounded-sm px-3 py-1">Early Bird -$300</span>
+              </div>
+              <a href="#"
+                class="inline-block bg-teal text-white px-7 py-3 text-[0.85rem] tracking-wide rounded-sm hover:bg-teal-light transition-colors">Apply
+                Now</a>
+            </div>
+          </div>
+
+          <div
+            class="invest-card bg-white rounded-lg overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.09)] flex-shrink-0 flex-[0_0_100%] md:flex-[0_0_calc(50%-12px)]">
+            <div class="h-[200px] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=700&q=80" alt="Reformer Only"
+                loading="lazy" class="w-full h-full object-cover hover:scale-[1.04] transition-transform duration-500">
+            </div>
+            <div class="p-7">
+              <span
+                class="text-[0.68rem] font-semibold tracking-widest uppercase text-teal bg-teal/[0.08] px-2 py-1 rounded-sm">Reformer</span>
+              <div class="flex justify-between items-start mt-3 mb-4">
+                <h3 class="font-serif text-[1.15rem]">Reformer Only Certification</h3>
+                <span class="text-[1.05rem] font-semibold text-teal whitespace-nowrap ml-4">USD $2,460</span>
+              </div>
+              <ul class="space-y-1 mb-5">
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> 5-day seminars</li>
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> Certification requirements: 200 hours</li>
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> Early bird discount: $200 off</li>
+              </ul>
+              <div class="flex flex-wrap gap-2 mb-5">
+                <span class="text-[0.75rem] bg-teal/[0.08] text-teal-dark rounded-sm px-3 py-1">200 hours</span>
+                <span class="text-[0.75rem] bg-teal/[0.08] text-teal-dark rounded-sm px-3 py-1">Early Bird -$200</span>
+              </div>
+              <a href="#"
+                class="inline-block bg-teal text-white px-7 py-3 text-[0.85rem] tracking-wide rounded-sm hover:bg-teal-light transition-colors">Apply
+                Now</a>
+            </div>
+          </div>
+
+          <div
+            class="invest-card bg-white rounded-lg overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.09)] flex-shrink-0 flex-[0_0_100%] md:flex-[0_0_calc(50%-12px)]">
+            <div class="h-[200px] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=700&q=80" alt="Mat Only"
+                loading="lazy" class="w-full h-full object-cover hover:scale-[1.04] transition-transform duration-500">
+            </div>
+            <div class="p-7">
+              <span
+                class="text-[0.68rem] font-semibold tracking-widest uppercase text-teal bg-teal/[0.08] px-2 py-1 rounded-sm">Mat</span>
+              <div class="flex justify-between items-start mt-3 mb-4">
+                <h3 class="font-serif text-[1.15rem]">Mat Only Certification</h3>
+                <span class="text-[1.05rem] font-semibold text-teal whitespace-nowrap ml-4">USD $1,200</span>
+              </div>
+              <ul class="space-y-1 mb-5">
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> 4-day seminars</li>
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> Certification requirements: 150 hours</li>
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> Early bird discount: $150 off</li>
+              </ul>
+              <div class="flex flex-wrap gap-2 mb-5">
+                <span class="text-[0.75rem] bg-teal/[0.08] text-teal-dark rounded-sm px-3 py-1">150 hours</span>
+                <span class="text-[0.75rem] bg-teal/[0.08] text-teal-dark rounded-sm px-3 py-1">Early Bird -$150</span>
+              </div>
+              <a href="#"
+                class="inline-block bg-teal text-white px-7 py-3 text-[0.85rem] tracking-wide rounded-sm hover:bg-teal-light transition-colors">Apply
+                Now</a>
+            </div>
+          </div>
+
+          <div
+            class="invest-card bg-white rounded-lg overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.09)] flex-shrink-0 flex-[0_0_100%] md:flex-[0_0_calc(50%-12px)]">
+            <div class="h-[200px] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1616279969965-15f5e3b0fdf5?w=700&q=80" alt="CCB Certification"
+                loading="lazy" class="w-full h-full object-cover hover:scale-[1.04] transition-transform duration-500">
+            </div>
+            <div class="p-7">
+              <span
+                class="text-[0.68rem] font-semibold tracking-widest uppercase text-teal bg-teal/[0.08] px-2 py-1 rounded-sm">Cadillac
+                / Chair / Barrels</span>
+              <div class="flex justify-between items-start mt-3 mb-4">
+                <h3 class="font-serif text-[1.15rem]">CCB Certification</h3>
+                <span class="text-[1.05rem] font-semibold text-teal whitespace-nowrap ml-4">USD $2,500</span>
+              </div>
+              <ul class="space-y-1 mb-5">
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> 3-day workshops</li>
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> Certification requirements: 200 hours</li>
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> EYT students receive 10% discount</li>
+              </ul>
+              <div class="flex flex-wrap gap-2 mb-5">
+                <span class="text-[0.75rem] bg-teal/[0.08] text-teal-dark rounded-sm px-3 py-1">200 hours</span>
+                <span class="text-[0.75rem] bg-teal/[0.08] text-teal-dark rounded-sm px-3 py-1">10% EYT Discount</span>
+              </div>
+              <a href="#"
+                class="inline-block bg-teal text-white px-7 py-3 text-[0.85rem] tracking-wide rounded-sm hover:bg-teal-light transition-colors">Apply
+                Now</a>
+            </div>
+          </div>
+
+          <div
+            class="invest-card bg-white rounded-lg overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.09)] flex-shrink-0 flex-[0_0_100%] md:flex-[0_0_calc(50%-12px)]">
+            <div class="h-[200px] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=80"
+                alt="Cadillac Barrels Workshop" loading="lazy"
+                class="w-full h-full object-cover hover:scale-[1.04] transition-transform duration-500">
+            </div>
+            <div class="p-7">
+              <span
+                class="text-[0.68rem] font-semibold tracking-widest uppercase text-teal bg-teal/[0.08] px-2 py-1 rounded-sm">Cadillac
+                / Barrels</span>
+              <div class="flex justify-between items-start mt-3 mb-4">
+                <h3 class="font-serif text-[1.15rem]">Cadillac &amp; Barrels Workshop</h3>
+                <span class="text-[1.05rem] font-semibold text-teal whitespace-nowrap ml-4">USD $1,650</span>
+              </div>
+              <ul class="space-y-1 mb-5">
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> 2-day workshops</li>
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> Certification requirements: 120 hours</li>
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> EYT students receive 10% discount</li>
+              </ul>
+              <div class="flex flex-wrap gap-2 mb-5">
+                <span class="text-[0.75rem] bg-teal/[0.08] text-teal-dark rounded-sm px-3 py-1">120 hours</span>
+                <span class="text-[0.75rem] bg-teal/[0.08] text-teal-dark rounded-sm px-3 py-1">10% EYT Discount</span>
+              </div>
+              <a href="#"
+                class="inline-block bg-teal text-white px-7 py-3 text-[0.85rem] tracking-wide rounded-sm hover:bg-teal-light transition-colors">Enquire
+                Now</a>
+            </div>
+          </div>
+
+          <div
+            class="invest-card bg-white rounded-lg overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.09)] flex-shrink-0 flex-[0_0_100%] md:flex-[0_0_calc(50%-12px)]">
+            <div class="h-[200px] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?w=700&q=80" alt="Chair Workshop"
+                loading="lazy" class="w-full h-full object-cover hover:scale-[1.04] transition-transform duration-500">
+            </div>
+            <div class="p-7">
+              <span
+                class="text-[0.68rem] font-semibold tracking-widest uppercase text-teal bg-teal/[0.08] px-2 py-1 rounded-sm">Chair</span>
+              <div class="flex justify-between items-start mt-3 mb-4">
+                <h3 class="font-serif text-[1.15rem]">Chair Workshop</h3>
+                <span class="text-[1.05rem] font-semibold text-teal whitespace-nowrap ml-4">USD $850</span>
+              </div>
+              <ul class="space-y-1 mb-5">
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> 1-day workshop</li>
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> Certification requirements: 80 hours</li>
+                <li class="flex items-start gap-2 text-[0.83rem] text-mid py-[0.3rem]"><span
+                    class="text-teal font-semibold flex-shrink-0">✓</span> EYT students receive 10% discount</li>
+              </ul>
+              <div class="flex flex-wrap gap-2 mb-5">
+                <span class="text-[0.75rem] bg-teal/[0.08] text-teal-dark rounded-sm px-3 py-1">80 hours</span>
+                <span class="text-[0.75rem] bg-teal/[0.08] text-teal-dark rounded-sm px-3 py-1">10% EYT Discount</span>
+              </div>
+              <a href="#"
+                class="inline-block bg-teal text-white px-7 py-3 text-[0.85rem] tracking-wide rounded-sm hover:bg-teal-light transition-colors">Enquire
+                Now</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="flex gap-[6px] items-center justify-center mt-6" id="investDots">
+        <span class="dot active h-[6px] bg-sand-dark cursor-pointer rounded-sm transition-all"></span>
+        <span class="dot h-[6px] w-[6px] bg-sand-dark cursor-pointer rounded-full transition-all"></span>
+        <span class="dot h-[6px] w-[6px] bg-sand-dark cursor-pointer rounded-full transition-all"></span>
+        <span class="dot h-[6px] w-[6px] bg-sand-dark cursor-pointer rounded-full transition-all"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 px-[5%] bg-white">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12 fade-up">
+        <h2 class="font-serif text-[clamp(1.8rem,3.5vw,2.8rem)] text-charcoal">Trusted by Pilates Teachers Worldwide
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 fade-up">
+        <div class="p-8 border bg-lightgrey">
+          <div class="text-[2rem] mb-3">
+            <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M35 12.2515L3.07422 24.2239L35 40.1868L50.2058 32.5839L35.941 28.2225C35.6472 28.3634 35.3257 28.4369 35 28.4376C34.4198 28.4376 33.8634 28.2071 33.4532 27.7969C33.0429 27.3867 32.8125 26.8303 32.8125 26.2501C32.8125 25.6699 33.0429 25.1135 33.4532 24.7033C33.8634 24.2931 34.4198 24.0626 35 24.0626L34.6382 25.2387L37.1726 26.0184L37.1737 26.026L40.9135 27.1697L62.207 33.7211V35.3817C61.9125 35.582 61.6714 35.8513 61.5046 36.1661C61.3378 36.4808 61.2504 36.8315 61.25 37.1877C61.2504 37.5521 61.3418 37.9106 61.5159 38.2307C61.69 38.5508 61.9414 38.8223 62.2471 39.0206C61.2513 42.7838 61.25 51.322 61.25 54.6876C63.4375 56.1088 63.4375 56.1607 65.625 54.6876C65.625 51.3224 65.6239 42.7858 64.6283 39.0218C64.9341 38.8234 65.1855 38.5516 65.3595 38.2313C65.5336 37.9109 65.6248 37.5522 65.625 37.1876C65.6249 36.831 65.5377 36.4798 65.3709 36.1646C65.2041 35.8494 64.9628 35.5798 64.6679 35.3792V31.9038L56.5572 29.4083L66.9257 24.2239L35 12.2515ZM16.3547 34.0431L14.5605 44.8083C18.1391 45.2763 22.4199 47.3563 26.3552 49.8159C28.5933 51.2148 30.6896 52.7503 32.3922 54.2401C33.4329 55.1507 34.3031 56.0243 35 56.8838C35.6968 56.0242 36.567 55.1507 37.6077 54.2401C39.3103 52.7503 41.4065 51.2148 43.6447 49.8159C47.58 47.3563 51.8608 45.2763 55.4394 44.8083L53.645 34.0431H52.7905L35 42.9384L17.2092 34.0431H16.3547Z"
+                fill="#3F7D73" />
+            </svg>
+          </div>
+          <div class="font-serif text-2xl my-[20px] text-black leading-none">1000+ Graduates</div>
+          <div class="text-xl text-mid">Certified through the EYT program</div>
+        </div>
+        <div class="p-8 border bg-lightgrey">
+          <div class="text-[2rem] mb-3">
+            <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M5.97923 37.9164H21.9538C22.4529 47.1531 25.3971 56.0913 30.4851 63.8164C24.1114 62.8159 18.249 59.7315 13.8146 55.0453C9.38016 50.3591 6.62664 44.3355 5.97923 37.9164ZM5.97632 32.0831C6.62297 25.6639 9.37871 19.6399 13.8126 14.9532C18.2465 10.2665 24.1086 7.18138 30.4822 6.18018C25.3942 13.9053 22.45 22.8435 21.9509 32.0802L5.97632 32.0831ZM64.018 32.0831H48.0434C47.5448 22.8454 44.6006 13.9061 39.5122 6.18018C45.8858 7.18065 51.7482 10.2651 56.1826 14.9513C60.6171 19.6374 63.3735 25.6611 64.0209 32.0802M64.0209 37.9135C63.3736 44.3322 60.6176 50.3555 56.1838 55.0416C51.7499 59.7277 45.8882 62.8124 39.5151 63.8135C44.6026 56.0892 47.5467 47.1521 48.0463 37.9164L64.0209 37.9135ZM27.7959 37.9164H42.2042C41.7252 45.7901 39.2456 53.4115 35.0001 60.0598C30.7545 53.4115 28.275 45.7901 27.7959 37.9164ZM27.7959 32.0831C28.275 24.2094 30.7545 16.588 35.0001 9.93976C39.2456 16.588 41.7252 24.2094 42.2042 32.0831H27.7959Z"
+                fill="#3F7D73" />
+            </svg>
+          </div>
+          <div class="font-serif text-2xl my-[20px] text-black leading-none">Global Community</div>
+          <div class="text-xl text-mid">Students from countries worldwide</div>
+        </div>
+        <div class="p-8 border bg-lightgrey sm:col-span-2 lg:col-span-1">
+          <div class="text-[2rem] mb-3">
+            <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_485_319)">
+                <path
+                  d="M70.0002 19.9502V15.721C70.0002 14.0192 69.3242 12.3871 68.1208 11.1837C66.9174 9.98037 65.2853 9.30433 63.5835 9.30433H55.7377L54.9502 4.521C54.7416 3.25135 54.0861 2.09804 53.1021 1.26908C52.118 0.440126 50.8702 -0.00990341 49.5835 0.000165365H38.996C37.7144 -0.00294206 36.4735 0.450245 35.4955 1.27858C34.5176 2.10693 33.8664 3.25633 33.6585 4.521L32.871 9.30433H25.0252C23.3234 9.30433 21.6913 9.98037 20.4879 11.1837C19.2846 12.3871 18.6085 14.0192 18.6085 15.721V19.9502H70.0002ZM37.9169 5.36683C37.9585 5.12741 38.0842 4.9107 38.2713 4.75566C38.4584 4.60061 38.6947 4.51741 38.9377 4.521H49.5835C49.8265 4.51741 50.0628 4.60061 50.2499 4.75566C50.4371 4.9107 50.5627 5.12741 50.6044 5.36683L51.2752 9.45016H37.2752L37.9169 5.36683ZM46.4919 24.3252V28.5835C46.4919 29.1637 46.2614 29.7201 45.8512 30.1303C45.4409 30.5405 44.8845 30.771 44.3044 30.771C43.7242 30.771 43.1678 30.5405 42.7576 30.1303C42.3473 29.7201 42.1169 29.1637 42.1169 28.5835V24.3252H18.6085V38.2085C18.6085 39.0511 18.7745 39.8855 19.097 40.664C19.4194 41.4426 19.8921 42.1499 20.4879 42.7458C21.0838 43.3416 21.7911 43.8143 22.5696 44.1367C23.3481 44.4592 24.1825 44.6252 25.0252 44.6252H63.5835C65.2853 44.6252 66.9174 43.9491 68.1208 42.7458C69.3242 41.5424 70.0002 39.9103 70.0002 38.2085V24.3252H46.4919ZM50.1377 55.096L41.3877 58.0127C41.2741 58.0063 41.1611 58.0332 41.0626 58.0902C40.9642 58.1473 40.8845 58.2318 40.8335 58.3335C40.4306 59.2078 39.7845 59.9476 38.9726 60.4648C38.1606 60.982 37.217 61.2546 36.2544 61.2502H26.2502C25.9176 61.2502 25.5986 61.118 25.3634 60.8828C25.1282 60.6476 24.996 60.3286 24.996 59.996C24.996 59.6634 25.1282 59.3444 25.3634 59.1092C25.5986 58.874 25.9176 58.7418 26.2502 58.7418H36.2835C36.9488 58.7418 37.5868 58.4776 38.0572 58.0072C38.5276 57.5368 38.7919 56.8988 38.7919 56.2335C38.7919 55.5682 38.5276 54.9302 38.0572 54.4598C37.5868 53.9894 36.9488 53.7252 36.2835 53.7252H27.5335C24.6411 51.5115 21.139 50.239 17.5002 50.0793H12.396C10.8355 50.0869 9.29801 50.4563 7.90436 51.1585L0.350195 54.921C0.256991 54.9703 0.176727 55.0409 0.115915 55.1271C0.0551038 55.2132 0.0154582 55.3125 0.000195293 55.4168V68.921C-0.002658 69.034 0.0258022 69.1455 0.0824265 69.2433C0.139051 69.3412 0.221631 69.4214 0.321029 69.4752C0.418574 69.5315 0.529226 69.5611 0.641862 69.5611C0.754498 69.5611 0.86515 69.5315 0.962695 69.4752L9.01269 64.4585C9.32906 64.2546 9.6864 64.1228 10.0594 64.0724C10.4324 64.022 10.8119 64.0542 11.171 64.1668C36.1377 72.596 27.796 72.6252 55.9419 58.3335C56.1366 58.2382 56.304 58.0952 56.4285 57.9177C56.5529 57.7403 56.6304 57.5342 56.6537 57.3187C56.677 57.1032 56.6454 56.8853 56.5617 56.6853C56.478 56.4853 56.345 56.3098 56.1752 56.1752C55.3428 55.4983 54.352 55.0442 53.2959 54.8554C52.2398 54.6666 51.153 54.7494 50.1377 55.096Z"
+                  fill="#3F7D73" />
+              </g>
+              <defs>
+                <clipPath id="clip0_485_319">
+                  <rect width="70" height="70" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <div class="font-serif text-2xl my-[20px] text-black leading-none">Career Opportunities</div>
+          <div class="text-xl text-mid">Grads now working in studios and privately</div>
+        </div>
+      </div>
+
+      <div class="relative overflow-hidden fade-up" id="testimCarousel">
+        <div class="absolute bottom-8 right-6 md:bottom-8 md:right-12 flex gap-3 z-20">
+          <button id="testimPrev"
+            class="w-[40px] h-[40px] rounded-full border border-teal text-teal bg-white shadow-sm hover:bg-teal hover:text-white transition-colors text-lg flex items-center justify-center leading-none"
+            aria-label="Previous">←</button>
+          <button id="testimNext"
+            class="w-[40px] h-[40px] rounded-full border border-teal text-teal bg-white shadow-sm hover:bg-teal hover:text-white transition-colors text-lg flex items-center justify-center leading-none"
+            aria-label="Next">→</button>
+        </div>
+
+        <div class="t-track" id="testimonialTrack">
+
+          <div
+            class="flex-shrink-0 w-full px-6 py-12 bg-lightgrey flex flex-col items-start md:items-center gap-4 relative">
+            <video src="https://video.wixstatic.com/video/af5771_0342d92caf294dc2a6a13fc88b15965d/1080p/mp4/file.mp4"
+              class="w-full h-[500px] object-cover" controls muted playsinline preload="metadata"></video>
+            <div class="font-medium text-2xl text-teal leading-tight">Asa</div>
+            <div class="text-xl text-muted leading-tight">Seafood Exporter | Jakarta, Indonesia</div>
+          </div>
+
+          <div
+            class="flex-shrink-0 w-full px-6 py-12 bg-lightgrey flex flex-col items-start md:items-center gap-4 relative">
+            <video src="https://video.wixstatic.com/video/af5771_98621853bad54e64a0a09990bbb39300/1080p/mp4/file.mp4"
+              class="w-full h-[500px] object-cover" controls muted playsinline preload="metadata"></video>
+            <div class="font-medium text-2xl text-teal leading-tight">Sofia</div>
+            <div class="text-xl text-muted leading-tight">English Teacher | Philippines</div>
+          </div>
+
+        </div>
+
+        <div class="flex gap-[6px] items-center justify-center mt-4" id="testimDots">
+          <span class="dot active h-[6px] bg-teal cursor-pointer rounded-sm transition-all"></span>
+          <span class="dot h-[6px] w-[6px] bg-sand-dark cursor-pointer rounded-full transition-all"></span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="py-20 px-[5%] bg-lightgrey">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-16 lg:gap-20 items-start">
         <div class="fade-up">
-          <div class="section-label">Curriculum</div>
-          <h2 class="section-title">What You Will Learn</h2>
-          <p class="section-desc">Our curriculum is centred around Pilates principles that are scientifically grounded and practically focused.</p>
+          <h2 class="font-serif text-[clamp(1.8rem,3vw,2.5rem)] text-charcoal mb-4">Frequently Asked Questions</h2>
+          <p class="text-base text-mid leading-relaxed">Everything you need to know before starting your Pilates teacher
+            training journey.</p>
+          <a href="#"
+            class="inline-block bg-teal text-white px-7 py-3 text-[0.85rem] tracking-wide rounded-sm hover:bg-teal-light transition-colors mt-7">Get
+            in Touch</a>
         </div>
-        <div class="accordion-list fade-up" id="learnAccordion">
-          <div class="accordion-item open">
-            <button class="accordion-trigger">Anatomy &amp; Biomechanics <span class="accordion-icon">+</span></button>
-            <div class="accordion-body"><div class="accordion-content">Understand the human body from the inside out. Explore how muscles, joints, and fascia interact during Pilates movement, giving you the knowledge to cue effectively and keep clients safe.</div></div>
-          </div>
-          <div class="accordion-item">
-            <button class="accordion-trigger">Teaching Skills &amp; Cueing <span class="accordion-icon">+</span></button>
-            <div class="accordion-body"><div class="accordion-content">Develop your unique teaching voice. Learn how to give clear, effective cues — both verbal and tactile — and how to read a room, adapt sessions on the fly, and build real rapport with clients.</div></div>
-          </div>
-          <div class="accordion-item">
-            <button class="accordion-trigger">Teaching Practice &amp; Observation <span class="accordion-icon">+</span></button>
-            <div class="accordion-body"><div class="accordion-content">Hours of supervised practice teaching across mat and equipment, with structured feedback from mentors and peer groups to fast-track your growth and confidence.</div></div>
-          </div>
-          <div class="accordion-item">
-            <button class="accordion-trigger">Program Design <span class="accordion-icon">+</span></button>
-            <div class="accordion-body"><div class="accordion-content">Learn to create customised programmes for diverse clients — beginners, athletes, post-natal, and rehabilitation — with well-structured progressions and modifications.</div></div>
-          </div>
-          <div class="accordion-item">
-            <button class="accordion-trigger">Business &amp; Studio Management <span class="accordion-icon">+</span></button>
-            <div class="accordion-body"><div class="accordion-content">From setting up your first private client to managing a studio schedule, gain the business acumen to build a sustainable, fulfilling teaching career.</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+        <div class="lg:col-span-2 fade-up" id="faqAccordion">
 
-<!-- INVESTMENT & INTAKES -->
-<section class="investment">
-  <div class="section-inner">
-    <div class="investment-header fade-up">
-      <div>
-        <div class="section-label">Investment</div>
-        <h2 class="section-title">Investment &amp; Upcoming Intakes</h2>
-      </div>
-      <div class="carousel-controls">
-        <button class="carousel-btn" id="investPrev" aria-label="Previous">←</button>
-        <button class="carousel-btn" id="investNext" aria-label="Next">→</button>
-      </div>
-    </div>
-    <div class="carousel-wrap">
-      <div class="carousel-track" id="investTrack">
-        <div class="invest-card">
-          <div class="invest-card-img"><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=700&q=80" alt="Mat Reformer" loading="lazy"></div>
-          <div class="invest-body">
-            <div class="invest-header-row">
-              <h3 class="invest-title">Mat &amp; Reformer Certification</h3>
-              <span class="invest-price">USD $3,100</span>
+          <div class="accordion-item open border-b border-sand-dark">
+            <button
+              class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-2xl text-charcoal text-left hover:text-teal transition-colors">
+              Do I need prior Pilates experience?
+              <span
+                class="accordion-icon w-14 h-14 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-teal text-4xl font-light">+</span>
+            </button>
+            <div class="accordion-body">
+              <div class="pb-5 text-base text-mid leading-[1.75]">Yes — we require a minimum of 20 Pilates classes or
+                private sessions before joining the training. This ensures you have a foundational understanding of the
+                method and are ready to step into a teaching environment with confidence.</div>
             </div>
-            <ul class="invest-features">
-              <li>3-day in-person weekends</li>
-              <li>Online sessions and study materials</li>
-              <li>Mentor access for the full study period</li>
-              <li>Study break and certification included</li>
-            </ul>
-            <div class="intake-row">
-              <span class="intake-badge">📅 May 15 – Jul 2, 2026</span>
-              <span class="intake-badge">Early Bird Discount: $500</span>
-            </div>
-            <div class="intake-row">
-              <span class="intake-badge">Aug 9 – Nov 5, 2026</span>
-              <span class="intake-badge">Nov 14 – Dec 2026</span>
-            </div>
-            <a href="#" class="btn-teal">Apply – Foundation</a>
           </div>
-        </div>
-        <div class="invest-card">
-          <div class="invest-card-img"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=700&q=80" alt="Comprehensive" loading="lazy"></div>
-          <div class="invest-body">
-            <div class="invest-header-row">
-              <h3 class="invest-title">Comprehensive Certification</h3>
-              <span class="invest-price">USD $5,700</span>
+
+          <div class="accordion-item border-b border-sand-dark">
+            <button
+              class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-2xl text-charcoal text-left hover:text-teal transition-colors">
+              Where is the training held?
+              <span
+                class="accordion-icon w-14 h-14 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-teal text-4xl font-light">+</span>
+            </button>
+            <div class="accordion-body">
+              <div class="pb-5 text-base text-mid leading-[1.75]">All in-person training is held at our boutique Pilates
+                studio in Seminyak, Bali, designed to provide a premium, real-world learning environment.</div>
             </div>
-            <ul class="invest-features">
-              <li>5-day in-person intensives</li>
-              <li>Studio access for apprentice hours</li>
-              <li>Priority access to guest faculty</li>
-              <li>Final assessment and certification</li>
-            </ul>
-            <div class="intake-row">
-              <span class="intake-badge">📅 Online: Female &amp; Seniors</span>
-              <span class="intake-badge">Mentor: Chen $500</span>
-            </div>
-            <div class="intake-row">
-              <span class="intake-badge">Mar 13 – Oct 21–23, 2026</span>
-            </div>
-            <a href="#" class="btn-teal">Apply – Comprehensive</a>
           </div>
-        </div>
-        <div class="invest-card">
-          <div class="invest-card-img"><img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=700&q=80" alt="Mentorship" loading="lazy"></div>
-          <div class="invest-body">
-            <div class="invest-header-row">
-              <h3 class="invest-title">Private Mentorship Package</h3>
-              <span class="invest-price">USD $1,800</span>
+
+          <div class="accordion-item border-b border-sand-dark">
+            <button
+              class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-2xl text-charcoal text-left hover:text-teal transition-colors">
+              Is accommodation included?
+              <span
+                class="accordion-icon w-14 h-14 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-teal text-4xl font-light">+</span>
+            </button>
+            <div class="accordion-body">
+              <div class="pb-5 text-base text-mid leading-[1.75]">Accommodation and flights are not included. However,
+                we're happy to recommend nearby villas, hotels, and areas to stay to make your experience as smooth as
+                possible.</div>
             </div>
-            <ul class="invest-features">
-              <li>10 one-on-one sessions with a senior mentor</li>
-              <li>Customised curriculum focus</li>
-              <li>Ideal supplement to either pathway</li>
-              <li>Flexible scheduling across time zones</li>
-            </ul>
-            <div class="intake-row"><span class="intake-badge">📅 Rolling enrolment</span></div>
-            <a href="#" class="btn-teal">Enquire Now</a>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="carousel-dots" id="investDots">
-      <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
-    </div>
-  </div>
-</section>
 
-<!-- TRUSTED / TESTIMONIALS -->
-<section class="trusted">
-  <div class="section-inner">
-    <div class="fade-up" style="text-align:center;margin-bottom:3rem">
-      <div class="section-label">Community</div>
-      <h2 class="section-title">Trusted by Pilates Teachers Worldwide</h2>
-    </div>
-    <div class="stats-row fade-up">
-      <div class="stat-card"><div class="stat-icon">🎓</div><div class="stat-number">1000+</div><div class="stat-label">Graduates<br><small>Certified through the BPP programme</small></div></div>
-      <div class="stat-card"><div class="stat-icon">🌏</div><div class="stat-number">38+</div><div class="stat-label">Global Community<br><small>Students from countries worldwide</small></div></div>
-      <div class="stat-card"><div class="stat-icon">💼</div><div class="stat-number">94%</div><div class="stat-label">Career Opportunities<br><small>Grads now working in studios and privately</small></div></div>
-    </div>
-    <div class="testimonial-carousel fade-up">
-      <div class="testimonial-track" id="testimonialTrack">
-        <div class="testimonial-card">
-          <div class="quotemark">"</div>
-          <p class="testimonial-quote">This training completely changed how I understand Pilates. The mentorship and hands-on practice gave me the confidence to start teaching and build a clientele within 3 months of graduating.</p>
-          <div class="testimonial-author">Jessica Ryan</div>
-          <div class="testimonial-role">Pilates Teacher, Jakarta, Indonesia</div>
-        </div>
-        <div class="testimonial-card">
-          <div class="quotemark">"</div>
-          <p class="testimonial-quote">I'd trained with other programmes before, but nothing came close to the depth and personalised attention I got here. The anatomy and biomechanics module alone was worth the investment.</p>
-          <div class="testimonial-author">Mia Thornton</div>
-          <div class="testimonial-role">Studio Owner, Melbourne, Australia</div>
-        </div>
-        <div class="testimonial-card">
-          <div class="quotemark">"</div>
-          <p class="testimonial-quote">The small cohort format made all the difference — our mentor knew each of us by name and tailored feedback to our individual strengths. Truly a world-class experience.</p>
-          <div class="testimonial-author">Sari Laksmi</div>
-          <div class="testimonial-role">Rehabilitation Teacher, Singapore</div>
-        </div>
-      </div>
-      <div class="t-controls">
-        <button class="carousel-btn" id="testimPrev">←</button>
-        <button class="carousel-btn" id="testimNext">→</button>
-      </div>
-      <div class="carousel-dots" id="testimDots">
-        <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
-      </div>
-    </div>
-  </div>
-</section>
+          <div class="accordion-item border-b border-sand-dark">
+            <button
+              class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-2xl text-charcoal text-left hover:text-teal transition-colors">
+              What is included in the course fee?
+              <span
+                class="accordion-icon w-14 h-14 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-teal text-4xl font-light">+</span>
+            </button>
+            <div class="accordion-body">
+              <div class="pb-5 text-base text-mid leading-[1.75]">Your training includes 8 in-person seminars, all
+                course materials, assessments, and mentorship, along with 6 months of studio access to complete your
+                practice, observation, and apprenticeship hours.</div>
+            </div>
+          </div>
 
-<!-- FAQ -->
-<section class="faq">
-  <div class="section-inner">
-    <div class="faq-layout">
-      <div class="fade-up">
-        <div class="section-label">FAQ</div>
-        <h2 class="section-title">Frequently Asked Questions</h2>
-        <p>Have more questions? Reach out to our admissions team — we're happy to help you find the right path.</p>
-        <a href="#" class="btn-teal" style="margin-top:1.75rem;display:inline-block">Get in Touch</a>
-      </div>
-      <div class="accordion-list fade-up" id="faqAccordion">
-        <div class="accordion-item open">
-          <button class="accordion-trigger">Do I need prior Pilates experience? <span class="accordion-icon">+</span></button>
-          <div class="accordion-body"><div class="accordion-content">No prior teaching experience is required for the Foundation pathway. However, we recommend at least 6 months of regular Pilates practice before enrolling so you have a foundation to build from.</div></div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-trigger">How long does it take to complete the certification? <span class="accordion-icon">+</span></button>
-          <div class="accordion-body"><div class="accordion-content">The Mat &amp; Reformer programme typically takes 9–12 months part-time. The Comprehensive programme runs 12–18 months depending on your pace and prior experience.</div></div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-trigger">Is the certification internationally recognised? <span class="accordion-icon">+</span></button>
-          <div class="accordion-body"><div class="accordion-content">Yes. Our certification is globally recognised and accepted by major Pilates organisations including BASI Pilates, PMA, and most international studio groups.</div></div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-trigger">Can I work while completing the training? <span class="accordion-icon">+</span></button>
-          <div class="accordion-body"><div class="accordion-content">Absolutely. Our programme is designed for working professionals, with weekend intensives and self-paced online modules that fit around a full-time schedule.</div></div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-trigger">What happens after I complete the programme? <span class="accordion-icon">+</span></button>
-          <div class="accordion-body"><div class="accordion-content">Graduates receive career support including studio placement assistance, access to our alumni network, and ongoing CPD workshops to keep your practice and teaching current.</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+          <div class="accordion-item border-b border-sand-dark">
+            <button
+              class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-2xl text-charcoal text-left hover:text-teal transition-colors">
+              What happens if I miss part of the training?
+              <span
+                class="accordion-icon w-14 h-14 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-teal text-4xl font-light">+</span>
+            </button>
+            <div class="accordion-body">
+              <div class="pb-5 text-base text-mid leading-[1.75]">We recommend attending all scheduled training seminars
+                to ensure the best learning experience. If any sessions are missed, options to make up the required
+                hours will be discussed with your teacher trainer.</div>
+            </div>
+          </div>
 
-<!-- CTA BANNER -->
-<section class="cta-banner">
-  <div class="section-inner">
-    <div class="section-label" style="color:rgba(255,255,255,0.6)">Start Today</div>
-    <h2>Start Your Journey as a Pilates Teacher</h2>
-    <p>Transform your passion for Pilates into a meaningful career. Join our next intake and become part of the Bali Pilates community.</p>
-    <div class="hero-btns" style="justify-content:center">
-      <a href="#" class="btn-white">Explore Your Pathway</a>
-      <a href="#" class="btn-outline">View Intakes</a>
-    </div>
-  </div>
-</section>
+          <div class="accordion-item border-b border-sand-dark">
+            <button
+              class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-2xl text-charcoal text-left hover:text-teal transition-colors">
+              How long does it take to complete the certification?
+              <span
+                class="accordion-icon w-14 h-14 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-teal text-4xl font-light">+</span>
+            </button>
+            <div class="accordion-body">
+              <div class="pb-5 text-base text-mid leading-[1.75]">The certification is designed as a structured 300-hour
+                program, combining in-person training, personal practice, observation, and apprentice teaching hours.
+                While the in-person component is completed during your intensive training in Bali, you will continue to
+                build experience through practice and teaching hours, supported by 6 months of studio access. Students
+                normally take between 6–12 months to complete their full study hours.</div>
+            </div>
+          </div>
 
-<!-- GUIDE DOWNLOAD -->
-<section class="guide">
-  <div class="guide-inner">
-    <div>
-      <h2>Download the Teacher Training Course Guide</h2>
-      <p>Everything you need to know — curriculum, pricing, pathways, and application process — delivered straight to your inbox.</p>
-      <div class="guide-form">
-        <input type="email" placeholder="Your email address">
-        <button class="btn-teal">Get the Guide</button>
-      </div>
-    </div>
-    <div class="guide-links">
-      <div class="guide-link-card"><div class="guide-link-title">Teachers</div><div class="guide-link-label">Graduate teacher profiles</div></div>
-      <div class="guide-link-card"><div class="guide-link-title">Graduates</div><div class="guide-link-label">Alumni success stories</div></div>
-      <div class="guide-link-card"><div class="guide-link-title">Careers</div><div class="guide-link-label">Studio placement programme</div></div>
-      <div class="guide-link-card"><div class="guide-link-title">Pilates Teachers</div><div class="guide-link-label">Career pathways overview</div></div>
-    </div>
-  </div>
-</section>
+          <div class="accordion-item border-b border-sand-dark">
+            <button
+              class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-2xl text-charcoal text-left hover:text-teal transition-colors">
+              Do I need to complete all hours in Bali?
+              <span
+                class="accordion-icon w-14 h-14 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-teal text-4xl font-light">+</span>
+            </button>
+            <div class="accordion-body">
+              <div class="pb-5 text-base text-mid leading-[1.75]">While many students choose to complete their hours in
+                Bali — as the studio is available for 6 months free of charge as part of your registration — the
+                training, including practice and teaching hours, can be completed in your home country. We provide
+                international students with an EYT Apprentice referral letter that you can take to a studio in your home
+                country to request either renting their equipment or applying for an apprentice teaching role to
+                complete your hours.</div>
+            </div>
+          </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <span class="nav-logo">B | Bali Pilates Plus</span>
-        <p>Jl. Raya Canggu 12, Canggu, Badung, Bali 80361<br>Indonesia</p>
-      </div>
-      <div class="footer-col">
-        <h4>Menu</h4>
-        <ul>
-          <li><a href="#">Overview</a></li>
-          <li><a href="#">Pathways</a></li>
-          <li><a href="#">Curriculum</a></li>
-          <li><a href="#">Testimonials</a></li>
-          <li><a href="#">FAQ</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Programmes</h4>
-        <ul>
-          <li><a href="#">Mat &amp; Reformer</a></li>
-          <li><a href="#">Comprehensive</a></li>
-          <li><a href="#">Private Mentorship</a></li>
-          <li><a href="#">CPD Workshops</a></li>
-        </ul>
-      </div>
-      <div class="footer-col footer-contact">
-        <h4>Contact</h4>
-        <p>hello@balipilatescollege.com<br>+62 811 3812 0000</p>
-        <p style="margin-top:1rem">Follow us<br><a href="#">@balipilatescollege</a></p>
+          <div class="accordion-item border-b border-sand-dark">
+            <button
+              class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-2xl text-charcoal text-left hover:text-teal transition-colors">
+              Is the certification internationally recognised?
+              <span
+                class="accordion-icon w-14 h-14 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-teal text-4xl font-light">+</span>
+            </button>
+            <div class="accordion-body">
+              <div class="pb-5 text-base text-mid leading-[1.75]">Yes — your certification is issued through EYT Pilates
+                Teacher Training (New York) and is registered with the NPCP (formerly PMA) in the USA. This provides you
+                with a strong, globally relevant foundation to teach in studios worldwide with confidence and
+                professionalism.</div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-b border-sand-dark">
+            <button
+              class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-2xl text-charcoal text-left hover:text-teal transition-colors">
+              What makes this training different from others in Bali?
+              <span
+                class="accordion-icon w-14 h-14 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-teal text-4xl font-light">+</span>
+            </button>
+            <div class="accordion-body">
+              <div class="pb-5 text-base text-mid leading-[1.75]">Our program combines small group mentorship, real
+                studio teaching experience, and 6 months of guided apprenticeship — ensuring you graduate confident, not
+                just certified.</div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-b border-sand-dark">
+            <button
+              class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-2xl text-charcoal text-left hover:text-teal transition-colors">
+              Can I work while completing the training?
+              <span
+                class="accordion-icon w-14 h-14 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-teal text-4xl font-light">+</span>
+            </button>
+            <div class="accordion-body">
+              <div class="pb-5 text-base text-mid leading-[1.75]">Yes — many students begin gaining experience as
+                apprentice teachers while completing their required hours. Full certification is awarded once all
+                requirements and assessments are completed. The structure allows flexibility, particularly during the
+                apprenticeship phase, where you can complete your hours at a pace that suits your schedule.</div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-b border-sand-dark">
+            <button
+              class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-2xl text-charcoal text-left hover:text-teal transition-colors">
+              How do I sit for my final exam?
+              <span
+                class="accordion-icon w-14 h-14 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-teal text-4xl font-light">+</span>
+            </button>
+            <div class="accordion-body">
+              <div class="pb-5 text-base text-mid leading-[1.75]">Certification includes both practical and written
+                assessments to ensure you are fully prepared to teach safely and professionally. Students submit their
+                exam online. The exam can be completed once you have finished all 300 hours and submitted your study
+                logbook.</div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-b border-sand-dark">
+            <button
+              class="accordion-trigger w-full bg-transparent border-none py-5 flex items-center justify-between cursor-pointer font-serif text-2xl text-charcoal text-left hover:text-teal transition-colors">
+              How is my Pilates Teacher certification issued?
+              <span
+                class="accordion-icon w-14 h-14 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-teal text-4xl font-light">+</span>
+            </button>
+            <div class="accordion-body">
+              <div class="pb-5 text-base text-mid leading-[1.75]">Your final exam result is sent to EYT in New York to
+                verify you have passed. They then issue your EYT Pilates Mat &amp; Reformer Teacher Certification and
+                send it to you via email.</div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Bali Pilates Plus. All rights reserved.</span>
-      <span>Privacy Policy · Terms of Use</span>
+  </section>
+
+  <section class="relative py-20 px-[5%] text-center overflow-hidden">
+    <div
+      class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=80')] bg-cover bg-center">
     </div>
-  </div>
-</footer>
+    <div class="absolute inset-0"
+      style="background:linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%)"></div>
+    <div class="absolute inset-0"
+      style="background:radial-gradient(circle at 30% 50%, rgba(200,169,110,0.12) 0%, transparent 60%), radial-gradient(circle at 80% 30%, rgba(255,255,255,0.05) 0%, transparent 50%)">
+    </div>
+    <div class="relative mx-auto">
+      <h2 class="font-serif text-[clamp(2rem,4vw,3.2rem)] text-white mb-4">Start Your Journey as a Pilates Teacher</h2>
+      <p class="text-white text-xl mb-10">Transform your passion for Pilates into a meaningful career while training in
+        the inspiring environment of Bali.</p>
+      <p class="text-white text-xl mb-10 mt-[30px]">Join the next generation of certified Pilates instructors.</p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="#"
+          class="inline-block bg-teal text-white px-8 py-[0.85rem] text-[0.88rem] font-medium tracking-wide rounded-sm hover:bg-white hover:text-teal transition-all duration-400">Apply
+          for Upcoming Intake</a>
+        <a href="#"
+          class="inline-block bg-transparent text-white border border-white/45 px-8 py-[0.85rem] text-[0.88rem] tracking-wide rounded-sm hover:border-white hover:bg-white/[0.06] transition-all">Book
+          an Info Call</a>
+      </div>
+    </div>
+  </section>
 
-<script>
-// ── Mobile Menu ──
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script>
+    function initAccordion(id) {
+      const wrap = document.getElementById(id);
+      if (!wrap) return;
+      wrap.querySelectorAll('.accordion-trigger').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = btn.closest('.accordion-item');
+          const wasOpen = item.classList.contains('open');
+          wrap.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+          if (!wasOpen) item.classList.add('open');
+        });
+      });
+    }
+    initAccordion('learnAccordion');
+    initAccordion('faqAccordion');
 
-// ── Accordion ──
-function initAccordion(id) {
-  const wrap = document.getElementById(id);
-  if (!wrap) return;
-  wrap.querySelectorAll('.accordion-trigger').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.accordion-item');
-      const wasOpen = item.classList.contains('open');
-      wrap.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
+    (function () {
+      const track = document.getElementById('heroTrack');
+      let idx = 0;
+      const total = track.children.length;
+      let timer;
+
+      function goTo(n) {
+        idx = (n + total) % total;
+        track.style.transform = `translateX(-${idx * 100}%)`;
+      }
+
+      function autoPlay() { timer = setInterval(() => goTo(idx + 1), 5000); }
+      function resetTimer() { clearInterval(timer); autoPlay(); }
+
+      document.getElementById('heroPrev').addEventListener('click', () => { goTo(idx - 1); resetTimer(); });
+      document.getElementById('heroNext').addEventListener('click', () => { goTo(idx + 1); resetTimer(); });
+
+      goTo(0);
+      autoPlay();
+    })();
+
+    (function () {
+      const track = document.getElementById('investTrack');
+      const dotsWrap = document.getElementById('investDots');
+      const dots = dotsWrap ? [...dotsWrap.querySelectorAll('.dot')] : [];
+      let idx = 0;
+
+      function visible() {
+        return window.innerWidth < 1024 ? 1 : 2;
+      }
+
+      function update() {
+        const cards = [...track.children];
+        const vis = visible();
+        const max = Math.max(0, cards.length - vis);
+        if (idx > max) idx = max;
+        const gap = 24;
+        const w = cards[0] ? cards[0].offsetWidth + gap : 0;
+        track.style.transform = `translateX(-${idx * w}px)`;
+        dots.forEach((d, i) => {
+          d.style.width = i === idx ? '18px' : '6px';
+          d.style.background = i === idx ? '#3d7c6f' : '#e8e0d0';
+          d.style.borderRadius = i === idx ? '3px' : '50%';
+        });
+      }
+
+      document.getElementById('investPrev').addEventListener('click', () => { idx = idx > 0 ? idx - 1 : 0; update(); });
+      document.getElementById('investNext').addEventListener('click', () => {
+        const max = Math.max(0, track.children.length - visible());
+        idx = idx < max ? idx + 1 : idx;
+        update();
+      });
+      dots.forEach((d, i) => d.addEventListener('click', () => { idx = i; update(); }));
+      window.addEventListener('resize', update);
+      update();
+    })();
+
+    (function () {
+      const track = document.getElementById('testimonialTrack');
+      const slides = [...track.children];
+      const dotsWrap = document.getElementById('testimDots');
+      const dots = dotsWrap ? [...dotsWrap.querySelectorAll('.dot')] : [];
+      const prevBtn = document.getElementById('testimPrev');
+      const nextBtn = document.getElementById('testimNext');
+      let idx = 0;
+      const total = slides.length;
+
+      function update() {
+        slides[idx].querySelector('video')?.pause();
+        const w = slides[0].offsetWidth;
+        track.style.transform = `translateX(-${idx * w}px)`;
+        dots.forEach((d, i) => {
+          d.style.width = i === idx ? '18px' : '6px';
+          d.style.background = i === idx ? '#3d7c6f' : '#e8e0d0';
+          d.style.borderRadius = i === idx ? '3px' : '50%';
+        });
+      }
+
+      prevBtn.addEventListener('click', () => { idx = idx > 0 ? idx - 1 : total - 1; update(); });
+      nextBtn.addEventListener('click', () => { idx = idx < total - 1 ? idx + 1 : 0; update(); });
+      dots.forEach((d, i) => d.addEventListener('click', () => { idx = i; update(); }));
+      window.addEventListener('resize', update);
+      update();
+    })();
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.fade-up:not(.visible)').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          el.classList.add('visible');
+        }
+      });
     });
-  });
-}
-initAccordion('learnAccordion');
-initAccordion('faqAccordion');
-
-// ── Carousel ──
-function initCarousel({ trackId, prevId, nextId, dotsId, defaultVisible }) {
-  const track = document.getElementById(trackId);
-  const dotsWrap = document.getElementById(dotsId);
-  const dots = dotsWrap ? [...dotsWrap.querySelectorAll('.dot')] : [];
-  let idx = 0;
-
-  function visible() {
-    if (window.innerWidth <= 500) return 1;
-    if (window.innerWidth <= 1024) return 1;
-    return defaultVisible;
-  }
-
-  function update() {
-    const cards = [...track.children];
-    const vis = visible();
-    const max = Math.max(0, cards.length - vis);
-    if (idx > max) idx = max;
-    const gap = 24;
-    const w = cards[0] ? cards[0].offsetWidth + gap : 0;
-    track.style.transform = `translateX(-${idx * w}px)`;
-    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-  }
-
-  document.getElementById(prevId).addEventListener('click', () => {
-    idx = idx > 0 ? idx - 1 : track.children.length - 1;
-    update();
-  });
-  document.getElementById(nextId).addEventListener('click', () => {
-    const max = Math.max(0, track.children.length - visible());
-    idx = idx < max ? idx + 1 : 0;
-    update();
-  });
-  dots.forEach((d, i) => d.addEventListener('click', () => { idx = i; update(); }));
-  window.addEventListener('resize', update);
-  update();
-}
-
-initCarousel({ trackId: 'investTrack', prevId: 'investPrev', nextId: 'investNext', dotsId: 'investDots', defaultVisible: 2 });
-initCarousel({ trackId: 'testimonialTrack', prevId: 'testimPrev', nextId: 'testimNext', dotsId: 'testimDots', defaultVisible: 1 });
-
-// ── Scroll fade-in ──
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-}, { threshold: 0.12 });
-document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-</script>
+  </script>
 </body>
+
 </html>
